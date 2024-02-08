@@ -3,7 +3,7 @@ const pool = require('../db'); // Assuming you have a 'db.js' file setting up yo
 const router = express.Router();
 
 // Create a new user
-router.post('/users', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { password, email, phone, place } = req.body;
     const query = 'INSERT INTO users (password, email, phone, place) VALUES ($1, $2, $3, $4) RETURNING *';
