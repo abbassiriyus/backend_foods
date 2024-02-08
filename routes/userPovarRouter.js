@@ -1,6 +1,6 @@
 const express = require('express');
 const pool = require('../db'); // Assuming you have a 'db.js' file setting up your database
-const { upload_image } = require('../middleware/file_upload');
+
 const router = express.Router();
 
 
@@ -8,7 +8,6 @@ const router = express.Router();
 router.post('/user_povar', async (req, res) => {
   try {
     const { user_id, deskription, expertise, place, is_prepared } = req.body;
-    var image=upload_image(req)
     const query =
       'INSERT INTO user_povar (user_id, deskription, expertise, place, is_prepared,image) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *';
     const values = [user_id, deskription, expertise, place, is_prepared,image];
