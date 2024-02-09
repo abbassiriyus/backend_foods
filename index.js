@@ -18,13 +18,13 @@ const foodSellerRouter=require('./routes/foodSellerRouter.js')
 const companyRouter=require('./routes/companyRouter.js')
 const roomRouter=require('./routes/roomRouter.js')
 const messagesRouter=require('./routes/messagesRouter.js')
-
+const fileUpload = require("express-fileupload");
+app.use(fileUpload())
 const cors = require('cors')
 const fs=require('fs')
 app.use(bodyParser.json());
 app.use(express.json());
-
-
+app.use(express.static('./uploads'))
 app.use(cors({origin: '*'}))
 
 
@@ -46,8 +46,11 @@ app.use('/api',roomRouter)
 app.use('/api',messagesRouter)
 
 
-
-
+app.get('/doc', (_req, res) => {
+  const data = fs.readFileSync('./uploads/index.html',
+  { encoding: 'utf8', flag: 'r' });
+res.status(200).send(data)
+})
 // Create an HTTP server
 const server = http.createServer(app);
 

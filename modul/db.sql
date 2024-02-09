@@ -17,7 +17,7 @@ create table users(
  "email" text not null,
  "phone" text not null,
  "online" timestamp default current_timestamp not null,
- "place" text not null,
+ "place" text,
  "image" text,
  "super_admin"  boolean default false not null,
  "povar"  boolean default false not null,

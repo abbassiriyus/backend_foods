@@ -4,17 +4,28 @@ const fs =require('fs')
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
+  function generateVerificationCode() {
+    const length = 6; // Length of the verification code
+    const characters = '0123456789'; // Characters to include in the code
+    let code = '';
   
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      code += characters[randomIndex];
+    }
+  
+    return code;
+  }
 
 
 var  upload_image=(req)=>{
   var send_image_link=""
   if(req.files && req.files.image){
     var file=req.files.image
-    var name_file=Date.now()+getRandomInt(12312321)
+    var name_file=Date.now()+getRandomInt(12312321)+"local_image"
     var file_tit=file.name.slice(file.name.lastIndexOf('.'))
-    file.mv(`${__dirname}/../uploads/${"local_image"+name_file+file_tit}`)
-    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+"local_image"+file_tit
+    file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
+    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
      send_image_link=req.body.image
     }
@@ -36,10 +47,10 @@ if(file_tit.includes("local_image")){
   var send_image_link=""
   if(req.files && req.files.image){
     var file=req.files.image
-    var name_file=Date.now()+getRandomInt(12312321)
+    var name_file=Date.now()+getRandomInt(12312321)+"local_image"
     var file_tit=file.name.slice(file.name.lastIndexOf('.'))
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
-    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+"local_image"+file_tit
+    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
      send_image_link=req.body.image
     }
@@ -50,10 +61,10 @@ var  upload_file=(req)=>{
   var send_image_link=""
   if(req.files && req.files.file){
     var file=req.files.file
-    var name_file=Date.now()+getRandomInt(12312321)
+    var name_file=Date.now()+getRandomInt(12312321)+"local_image"
     var file_tit=file.name.slice(file.name.lastIndexOf('.'))
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
-    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+"local_image"+file_tit
+    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
      send_image_link=req.body.image
     }
@@ -75,10 +86,10 @@ if(file_tit.includes("local_image")){
   var send_image_link=""
   if(req.files && req.files.file){
     var file=req.files.file
-    var name_file=Date.now()+getRandomInt(12312321)
+    var name_file=Date.now()+getRandomInt(12312321)+"local_image"
     var file_tit=file.name.slice(file.name.lastIndexOf('.'))
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
-    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+"local_image"+file_tit
+    send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
      send_image_link=req.body.image
     }
@@ -86,4 +97,4 @@ if(file_tit.includes("local_image")){
 
 }
 
-module.exports={upload_file,delete_file,put_file,upload_image,delete_image,put_image}
+module.exports={upload_file,delete_file,put_file,upload_image,delete_image,put_image,generateVerificationCode}

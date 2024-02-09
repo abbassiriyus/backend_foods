@@ -14,7 +14,7 @@ router.post('/room', async (req, res) => {
       res.status(201).json(result.rows[0]);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -26,7 +26,7 @@ router.post('/room', async (req, res) => {
       res.status(200).json(result.rows);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -43,7 +43,7 @@ router.post('/room', async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -68,7 +68,7 @@ router.post('/room', async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -85,7 +85,7 @@ router.post('/room', async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
 

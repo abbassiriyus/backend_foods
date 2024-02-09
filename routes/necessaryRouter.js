@@ -1,5 +1,6 @@
 const express = require('express');
 const pool = require('../db'); // Assuming you have a 'db.js' file setting up your database
+const { upload_file, put_file, delete_file } = require('../middleware/file_upload');
 const router = express.Router();
 
 
@@ -7,7 +8,8 @@ const router = express.Router();
 // Create a necessary record
 router.post('/necessary', async (req, res) => {
     try {
-      const { file, title } = req.body;
+      const { title } = req.body;
+      var file = upload_file(req);
       const query =
         'INSERT INTO necessary (file, title) VALUES ($1, $2) RETURNING *';
       const values = [file, title];
@@ -15,7 +17,7 @@ router.post('/necessary', async (req, res) => {
       res.status(201).json(result.rows[0]);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -27,7 +29,7 @@ router.post('/necessary', async (req, res) => {
       res.status(200).json(result.rows);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -44,7 +46,7 @@ router.post('/necessary', async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -52,7 +54,10 @@ router.post('/necessary', async (req, res) => {
   router.put('/necessary/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { file, title } = req.body;
+      const { title } = req.body;
+      const query2 = 'SELECT * FROM necessary WHERE id = $1';
+      const result2 = await pool.query(query2, [id]);
+      var file=put_file(result2.rows[0].file,req)
       const query =
         'UPDATE necessary SET file = $1, title = $2, time_update = current_timestamp WHERE id = $3 RETURNING *';
       const values = [file, title, id];
@@ -64,7 +69,7 @@ router.post('/necessary', async (req, res) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
@@ -72,12 +77,15 @@ router.post('/necessary', async (req, res) => {
   router.delete('/necessary/:id', async (req, res) => {
     try {
       const { id } = req.params;
+      const query2= 'SELECT * FROM necessary WHERE id = $1';
+      const result2 = await pool.query(query2, [id]);
+      delete_file(result2.rows[0].file)
       const query = 'DELETE FROM necessary WHERE id = $1';
       await pool.query(query, [id]);
       res.status(204).end();
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message  });
     }
   });
   
