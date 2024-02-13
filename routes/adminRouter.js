@@ -60,7 +60,7 @@ router.put('/update-data/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const { email, name, address, city, country, postal_code, about_me, username, lastname } = req.body;     
-      const query = `UPDATE your_table SET email = $1, name = $2, address = $3, city = $4, country = $5, postal_code = $6, about_me = $7, username = $8, lastname = $9 WHERE id = $10`;
+      const query = `UPDATE users SET email = $1, name = $2, address = $3, city = $4, country = $5, postal_code = $6, about_me = $7, username = $8, lastname = $9 WHERE id = $10`;
       await pool.query(query, [email, name, address, city, country, postal_code, about_me, username, lastname, id]);
       res.status(200).json({ message: 'Data updated successfully' });
     } catch (error) {
