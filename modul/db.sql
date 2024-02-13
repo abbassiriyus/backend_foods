@@ -18,6 +18,15 @@ create table users(
  "phone" text not null,
  "online" timestamp default current_timestamp not null,
  "place" text,
+ "name" text,
+ "address" text,
+ "city" text,
+ "country" text,
+ "postal_code" text,
+ "about_me" text,
+ "username" text,
+ "lastname" text,
+ UNIQUE(phone),
  "image" text,
  "super_admin"  boolean default false not null,
  "povar"  boolean default false not null,
@@ -25,6 +34,7 @@ create table users(
  "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 );
+
 create table user_povar(
  "id" serial primary key,
  "user_id" integer not null,
@@ -153,3 +163,20 @@ CREATE TABLE messages (
   "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
 );
+
+create table carousel_forcooks(
+  "id" SERIAL PRIMARY KEY,
+  "name" text not null,
+  "image" text not null,
+  "kasb" text not null,
+  "desk" text not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+)
+create table vopros_atvet(
+ "id" SERIAL PRIMARY KEY,
+ "title" text not null,
+ "desk" text not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null  
+)

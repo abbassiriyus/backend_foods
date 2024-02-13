@@ -39,6 +39,8 @@ router.post('/login', (req, res) => {
   res.json({ token });
 });
 
+
+
 // Get all users
 router.get('/users', async (req, res) => {
   try {
@@ -134,5 +136,56 @@ router.delete('/users/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Telefon numarası doğrulama kodu oluşturma ve kaydetme
+router.post('/verify', async (req, res) => {
+  const { phone } = req.body;
+
+  try {
+    const code = generateVerificationCode();
+    const query2 = 'SELECT * FROM verify WHERE phone = $1';
+    const values2 = [phone];
+    const result2= await pool.query(query2, values2);
+if(result2.rows.length==0){
+const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
+    const values = [phone, code];
+    const result = await pool.query(query, values);
+    res.status(201).json({ id: result.rows[0].id, code });
+}else{
+  const query3 = `UPDATE verify SET code = $1,
+  time_update = current_timestamp WHERE id = $2 RETURNING *`;
+console.log(result2.rows[0]);
+const values3= [code, result2.rows[0].id];
+
+const result3 = await pool.query(query3, values3);
+res.status(201).json({ id: result2.rows[0].id, code });
+}
+
+    
+  } catch (error) {
+    console.error('Hata:', error);
+    res.status(500).json({ error: 'Bir hata oluştu' });
+  }
+});
+router.post('/verify2', async (req, res) => {
+  const { phone } = req.body;
+
+  try {
+    const code = generateVerificationCode();
+    const query2 = 'SELECT * FROM users WHERE phone = $1';
+    const values2 = [phone];
+const result2= await pool.query(query2, values2);
+if(result2.rows.length==0){
+ res.status(500).send("user topilmadi") 
+}else{
+res.status(200).send("succsess")
+}  
+  } catch (error) {
+    console.error('Hata:', error);
+    res.status(500).json({ error: 'Bir hata oluştu' });
+  }
+});
+
+
 
 module.exports=router
