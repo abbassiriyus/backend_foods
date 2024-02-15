@@ -43,15 +43,17 @@ router.post('/login', (req, res) => {
 
 // Get all users
 router.get('/users', async (req, res) => {
+  // console.log("hello");
   try {
     const query = 'SELECT * FROM users';
-    const result = await pool.query(query);
-
+    const result = await pool.query(query); 
+    console.log(result.rows);
     res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
   }
+  res.status(200).send("asdasd")
 });
 
 // Get a user by ID

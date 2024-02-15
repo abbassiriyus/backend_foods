@@ -1,4 +1,4 @@
-const { Pool } = require("pg")
+const { Pool, Client } = require("pg")
 
 // const pool = new Client({
 //     user: "postgres",
@@ -8,22 +8,16 @@ const { Pool } = require("pg")
 //     port: 5619
 // })
 // const pool = new Client({
-//     user: "uzdubuz_id_rsa",
-//     host: "clocalhost",
-//     database: "uzdubuz_test",
-//     password: "o$n;y)_HLGwM",
+//     user: "abbasuz1_abbas12",
+//     host: "localhost",
+//     database: "abbasuz1_foods",
+//     password: "*usU3Vzf&BBR",
 //     port: 5619
 // })
-const connectionString = 'postgres://default:JKvCT06aWrER@ep-dark-snowflake-a43k171y.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require';
+const connectionString = 'postgres://default:iXIu4pgzZj3l@ep-muddy-hat-a4w2oo3c.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require';
 
 const pool = new Pool({
-  connectionString: connectionString,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, // Это может быть необходимо в вашем окружении
-    },
-  },
+  connectionString: connectionString
 });
 pool.connect(err => {
     if(err) {

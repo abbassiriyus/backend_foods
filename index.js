@@ -20,9 +20,11 @@ const roomRouter=require('./routes/roomRouter.js')
 const forCooksRouter=require('./routes/forCooksRouter.js')
 const messagesRouter=require('./routes/messagesRouter.js')
 const voprosRouter=require('./routes/voprosRouter.js')
+const userProgRouter=require('./routes/userProgRouter.js')
+const foodmarkRouter=require('./routes/foodmarkRouter.js')
+
+
 const adminRouter=require('./routes/adminRouter.js')
-
-
 const fileUpload = require("express-fileupload");
 app.use(fileUpload())
 const cors = require('cors')
@@ -35,6 +37,9 @@ app.use(cors({origin: '*'}))
 app.use('/admin',adminRouter)
 
 app.use('/api',forCooksRouter)
+app.use('/api',foodmarkRouter)
+
+app.use('/api',userProgRouter)
 app.use('/api',userRouter)
 app.use('/api',voprosRouter)
 app.use('/api',userPovarRouter)
