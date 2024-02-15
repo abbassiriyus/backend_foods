@@ -27,11 +27,9 @@ router.post('/register', async (req, res) => {
 // Token yaratma endpoint'i
 router.post('/login', (req, res) => {
   const { email, password, phone } = req.body;
-
   if ((!email || !password) && (!phone || !password)) {
     return res.status(400).json({ error: 'Email ve password veya phone ve password alanları zorunludur.' });
   }
-
   // Burada email ve password veya phone ve password bilgilerini kullanarak token yaratıyoruz
   const payload = { email, password, phone };
   const token = jwt.sign(payload, process.env.SECRET_KEY);

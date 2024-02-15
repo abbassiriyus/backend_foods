@@ -25,7 +25,6 @@ router.get('/userprog/header', async (req, res) => {
   try {
     const query = 'SELECT * FROM user_prog';
     const query2 = 'SELECT * FROM foods';
-
     const query3 = 'SELECT * FROM users';
     const query4 = 'SELECT * FROM food_mark';
     const result = await db.query(query);
@@ -37,14 +36,12 @@ router.get('/userprog/header', async (req, res) => {
       result2.rows[i].mark=5
       result2.rows[i].mark_org=false
      for (let j = 0; j < result4.rows.length; j++) {
-      if(result2.rows[i].id==result4.rows[j]){
-
+      if(result2.rows[i].id==result4.rows[j].user_id){
+        result2.rows[i].mark=(result4.rows[j].mark+result2.rows[i].mark)/2
+        result2.rows[i].mark_org=true
       }
-       
      }
     }
-
-
 for (let i = 0; i < result.rows.length; i++) {
 for (let j = 0; j < result2.rows.length; j++) {
 if(result2.rows[j].id==result.rows[i].user_id){
@@ -53,7 +50,6 @@ if(result2.rows[j].id==result.rows[i].user_id){
   result.rows[i].user_povar_id=result2.rows[j].user_povar_id
   result.rows[i].food_name=result2.rows[j].food_name
   result.rows[i].mark=result2.rows[j].mark
-
 }
 }
 }

@@ -5,18 +5,14 @@ const { upload_image, generateVerificationCode, put_image, delete_image } = requ
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-
-
 router.post('/login', async (req, res) => {
-  const { email, password, phone } = req.body;
-
+  const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email ve password veya phone ve password alanları zorunludur.' });
+    return res.status(400).json({ error: 'Email ve password.' });
   }
   const { id } = req.params;
     const query = 'SELECT * FROM users WHERE email=$1 and password=$2';
     const result = await pool.query(query, [email,password]);
-
     if (result.rows.length === 0) {
       res.status(404).json({ error: 'User not found' });
     } else {  const payload = { email, password };
@@ -26,7 +22,6 @@ router.post('/login', async (req, res) => {
 
     }
   // Burada email ve password veya phone ve password bilgilerini kullanarak token yaratıyoruz
-
 });
 router.get('/profile', async (req, res) => {
   const token = req.headers.authorization;
@@ -67,6 +62,6 @@ router.put('/update-data/:id', async (req, res) => {
       console.error('Error updating data:', error);
       res.status(500).json({ message: 'An error occurred' });
     }
-  });
+});
 
 module.exports=router
