@@ -18,6 +18,7 @@ create table users(
  "phone" text not null,
  "online" timestamp default current_timestamp not null,
  "place" text,
+"ish_yonalishi_id" integer not null,
  "name" text,
  "address" text,
  "city" text,
@@ -35,6 +36,12 @@ create table users(
   "time_update" timestamp default current_timestamp not null
 );
 
+create table ish_yonalishi(
+  "id" serial primary key,
+   "title" text not null,
+    "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null
+)
 
 create table user_prog(
    "id" serial primary key,

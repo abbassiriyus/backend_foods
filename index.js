@@ -23,7 +23,7 @@ const voprosRouter=require('./routes/voprosRouter.js')
 const userProgRouter=require('./routes/userProgRouter.js')
 const foodmarkRouter=require('./routes/foodmarkRouter.js')
 
-
+const ishyonalishiRouter=require('./routes/ishyonalishiRouter.js')
 const adminRouter=require('./routes/adminRouter.js')
 const fileUpload = require("express-fileupload");
 app.use(fileUpload())
@@ -52,6 +52,8 @@ app.use('/api',advantagesRouter)
 app.use('/api',foodRouter)
 app.use('/api',foodAdvantagesRouter)
 app.use('/api',necessaryRouter)
+app.use('/api',ishyonalishiRouter)
+
 app.use('/api',foodSellerRouter)
 app.use('/api',companyRouter)
 app.use('/api',roomRouter)
