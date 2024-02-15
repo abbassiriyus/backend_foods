@@ -8,10 +8,10 @@ const jwt = require('jsonwebtoken');
 // Create a new user
 router.post('/register', async (req, res) => {
   try {
-    const { password, email, phone, place,ish_yonalishi_id } = req.body;
+    const { password, email, phone, address } = req.body;
     var image = upload_image(req);
-    const query = 'INSERT INTO users (password, email, phone, place, image,ish_yonalishi_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-    const values = [password, email, phone, place, image,ish_yonalishi_id];
+    const query = 'INSERT INTO users (password, email, phone, address, image) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+    const values = [password, email, phone, address, image];
     // Generate a verification code
     const verificationCode = generateVerificationCode();
     // Generate a token
@@ -76,12 +76,12 @@ router.get('/users/:id', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { password, email, phone, place } = req.body;
+    const { password, email, phone, address } = req.body;
     const query2 = 'SELECT * FROM users WHERE id = $1';
     const result2 = await pool.query(query2, [id]);
     var image=put_image(result2.rows[0].image,req)
-    const query = 'UPDATE users SET password = $1, email = $2, phone = $3, place = $4,image = $5 WHERE id = $6 RETURNING *';
-    const values = [password, email, phone, place,image, id];
+    const query = 'UPDATE users SET password = $1, email = $2, phone = $3, address = $4,image = $5 WHERE id = $6 RETURNING *';
+    const values = [password, email, phone, address,image, id];
     const result = await pool.query(query, values);
     if (result.rows.length===0){
       res.status(404).json({ error: 'User not found' });
@@ -98,17 +98,17 @@ router.put('/users/:id', async (req, res) => {
 router.patch('/users/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { password, email, phone, place } = req.body;
+      const { password, email, phone, address } = req.body;
       const updates = {};
       if (password) updates.password = password;
       if (email) updates.email = email;
       if (phone) updates.phone = phone;
-      if (place) updates.place = place;
+      if (address) updates.address = address;
       const query2 = 'SELECT * FROM users WHERE id = $1';
       const result2 = await pool.query(query2, [id]);
       var image=put_image(result2.rows[0].image,req)
-      const query = 'UPDATE users SET password = $1, email = $2, phone = $3, place = $4,image = $5 WHERE id = $6 RETURNING *';
-      const values = [updates.password, updates.email, updates.phone, updates.place,image, id];
+      const query = 'UPDATE users SET password = $1, email = $2, phone = $3, address = $4,image = $5 WHERE id = $6 RETURNING *';
+      const values = [updates.password, updates.email, updates.phone, updates.address,image, id];
       const result = await pool.query(query, values);
       if (result.rows.length === 0) {
         res.status(404).json({ error: 'User not found' });

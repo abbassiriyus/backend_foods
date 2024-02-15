@@ -17,8 +17,6 @@ create table users(
  "email" text not null,
  "phone" text not null,
  "online" timestamp default current_timestamp not null,
- "place" text,
- "ish_yonalishi_id" integer not null,
  "name" text,
  "address" text,
  "city" text,
@@ -39,10 +37,11 @@ create table users(
 create table ish_yonalishi(
   "id" serial primary key,
    "title" text not null,
-    "time_create" timestamp default current_timestamp not null,
+  "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 )
 
+-- headerdagi cariuseli tabelisi
 create table user_prog(
    "id" serial primary key,
    "user_id" integer not null,
@@ -58,10 +57,12 @@ create table user_povar(
  "deskription" text not null,
  "expertise" text not null,
  "place" text not null,
+ "ish_yonalishi" text not null,
  "is_prepared" text not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null
 );
+
 create table category(
  "id" serial primary key,
  "title" text not null,
@@ -69,13 +70,7 @@ create table category(
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null
 );
-create table povar_category(
- "id" serial primary key,
- "user_povar_id" integer not null,
- "category_id" integer not null,
- "time_create" timestamp default current_timestamp not null,
- "time_update" timestamp default current_timestamp not null
-);
+
 create table my_kitchen(
  "id" serial primary key,
  "user_povar_id" integer not null,

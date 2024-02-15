@@ -26,8 +26,8 @@ router.get('/userprog/header', async (req, res) => {
     const query = 'SELECT * FROM user_prog';
     const query2 = 'SELECT * FROM foods';
     const query3 = 'SELECT * FROM users';
-   const query4 = 'SELECT * FROM food_mark'; 
-   const query5 = 'SELECT * FROM ish_yonalishi';
+    const query4 = 'SELECT * FROM food_mark'; 
+    const query5 = 'SELECT * FROM user_povar';
     const result = await db.query(query);
     const result2 = await db.query(query2);
     const result3 = await db.query(query3);
@@ -36,7 +36,7 @@ router.get('/userprog/header', async (req, res) => {
 
 for (let i = 0; i < result3.rows.length; i++) {
 for (let j = 0; j < result5.rows.length; j++) {
- if(result3.rows[i].ish_yonalishi_id==result5.rows[j].id){
+ if(result3.rows[i].id==result5.rows[j].user_id){
   result3.rows[i].ish_yonalishi_title=result5.rows[j].title
  }
 }}
@@ -60,7 +60,6 @@ if(result2.rows[j].id==result.rows[i].food_id){
   result.rows[i].food_name=result2.rows[j].food_name
   result.rows[i].mark=result2.rows[j].mark
   result.rows[i].mark_org=result2.rows[j].mark_org
-
 }
 }
 for (let j = 0; j < result3.rows.length; j++) {
@@ -68,7 +67,6 @@ for (let j = 0; j < result3.rows.length; j++) {
     result.rows[i].username=result3.rows[j].username
     result.rows[i].lastname=result3.rows[j].lastname
     result.rows[i].name=result3.rows[j].name
-   
     result.rows[i].ish_yonalishi_title=result3.rows[j].ish_yonalishi_title
     result.rows[i].username=result3.rows[j].username
 

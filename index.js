@@ -42,11 +42,9 @@ app.use(express.static('./uploads'))
 app.use(cors({origin: '*'}))
 
 app.use('/admin',adminRouter)
-
 app.use('/api',forCooksRouter)
 app.use('/api',headerSizUchun)
 app.use('/api',foodmarkRouter)
-
 app.use('/api',userProgRouter)
 app.use('/api',userRouter)
 app.use('/api',voprosRouter)
@@ -63,16 +61,11 @@ app.use('/api',necessaryRouter)
 app.use('/api',ishyonalishiRouter)
 app.use('/api',headeroshpazdanTaom)
 app.use('/api',headerSoglom)
-
-
-
 app.use('/api',foodSellerRouter)
 app.use('/api',headerShirinliklar)
-
 app.use('/api',companyRouter)
 app.use('/api',roomRouter)
 app.use('/api',messagesRouter)
-
 
 app.get('/doc', (_req, res) => {
   const data = fs.readFileSync('./uploads/index.html',

@@ -7,10 +7,10 @@ const router = express.Router();
 
 router.post('/user_povar', async (req, res) => {
   try {
-    const { user_id, deskription, expertise, place, is_prepared } = req.body;
+    const { user_id, deskription,ish_yonalishi, expertise, place, is_prepared } = req.body;
     const query =
-      'INSERT INTO user_povar (user_id, deskription, expertise, place, is_prepared,image) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *';
-    const values = [user_id, deskription, expertise, place, is_prepared,image];
+      'INSERT INTO user_povar (user_id, deskription, expertise, place, is_prepared,image,ish_yonalishi) VALUES ($1, $2, $3, $4, $5,$6,$7) RETURNING *';
+    const values = [user_id, deskription, expertise, place, is_prepared,image,ish_yonalishi];
     const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -52,10 +52,10 @@ router.get('/user_povar/:id', async (req, res) => {
 router.put('/user_povar/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { user_id, deskription, expertise, place, is_prepared } = req.body;
+    const { user_id, deskription, expertise, place, is_prepared,ish_yonalishi } = req.body;
     const query =
-      'UPDATE user_povar SET user_id = $1, deskription = $2, expertise = $3, place = $4, is_prepared = $5, time_update = current_timestamp WHERE id = $6 RETURNING *';
-    const values = [user_id, deskription, expertise, place, is_prepared, id];
+      'UPDATE user_povar SET user_id = $1, deskription = $2, expertise = $3, place = $4, is_prepared = $5,ish_yonalishi=$6, time_update = current_timestamp WHERE id = $t RETURNING *';
+    const values = [user_id, deskription, expertise, place, is_prepared,ish_yonalishi, id];
     const result = await pool.query(query, values);
     if (result.rows.length === 0) {
       res.status(404).json({ error: 'User not found' });
