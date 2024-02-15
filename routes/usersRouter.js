@@ -8,10 +8,10 @@ const jwt = require('jsonwebtoken');
 // Create a new user
 router.post('/register', async (req, res) => {
   try {
-    const { password, email, phone, place } = req.body;
+    const { password, email, phone, place,ish_yonalishi_id } = req.body;
     var image = upload_image(req);
-    const query = 'INSERT INTO users (password, email, phone, place, image) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-    const values = [password, email, phone, place, image];
+    const query = 'INSERT INTO users (password, email, phone, place, image,ish_yonalishi_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+    const values = [password, email, phone, place, image,ish_yonalishi_id];
     // Generate a verification code
     const verificationCode = generateVerificationCode();
     // Generate a token

@@ -33,6 +33,21 @@ router.get('/ishyonalishi/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// READ - O'qish
+router.get('/ishyonalishi', async (req, res) => {
+    try {
+      const query = 'SELECT * FROM ish_yonalishi';
+      const result = await db.query(query);
+      if (result.rows.length === 0) {
+        res.status(404).json({ message: 'Ma\'lumot topilmadi' });
+      } else {
+        res.json(result.rows[0]);
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
 
 // UPDATE - O'zgartirish
 router.put('/ishyonalishi/:id', async (req, res) => {

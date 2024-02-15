@@ -15,6 +15,8 @@ const advantagesRouter=require('./routes/advantagesRouter.js')
 const foodAdvantagesRouter=require('./routes/foodAdvantagesRouter.js')
 const necessaryRouter=require('./routes/necessaryRouter.js')
 const foodSellerRouter=require('./routes/foodSellerRouter.js')
+const headerShirinliklar=require('./routes/headerShirinliklar.js')
+
 const companyRouter=require('./routes/companyRouter.js')
 const roomRouter=require('./routes/roomRouter.js')
 const forCooksRouter=require('./routes/forCooksRouter.js')
@@ -22,8 +24,13 @@ const messagesRouter=require('./routes/messagesRouter.js')
 const voprosRouter=require('./routes/voprosRouter.js')
 const userProgRouter=require('./routes/userProgRouter.js')
 const foodmarkRouter=require('./routes/foodmarkRouter.js')
+const headerSizUchun=require('./routes/headerSizUchun.js')
 
 const ishyonalishiRouter=require('./routes/ishyonalishiRouter.js')
+const headeroshpazdanTaom=require('./routes/headeroshpazdanTaom.js')
+const headerSoglom=require('./routes/headerSoglom.js')
+
+
 const adminRouter=require('./routes/adminRouter.js')
 const fileUpload = require("express-fileupload");
 app.use(fileUpload())
@@ -37,6 +44,7 @@ app.use(cors({origin: '*'}))
 app.use('/admin',adminRouter)
 
 app.use('/api',forCooksRouter)
+app.use('/api',headerSizUchun)
 app.use('/api',foodmarkRouter)
 
 app.use('/api',userProgRouter)
@@ -53,8 +61,14 @@ app.use('/api',foodRouter)
 app.use('/api',foodAdvantagesRouter)
 app.use('/api',necessaryRouter)
 app.use('/api',ishyonalishiRouter)
+app.use('/api',headeroshpazdanTaom)
+app.use('/api',headerSoglom)
+
+
 
 app.use('/api',foodSellerRouter)
+app.use('/api',headerShirinliklar)
+
 app.use('/api',companyRouter)
 app.use('/api',roomRouter)
 app.use('/api',messagesRouter)

@@ -18,7 +18,7 @@ create table users(
  "phone" text not null,
  "online" timestamp default current_timestamp not null,
  "place" text,
-"ish_yonalishi_id" integer not null,
+ "ish_yonalishi_id" integer not null,
  "name" text,
  "address" text,
  "city" text,
@@ -65,6 +65,7 @@ create table user_povar(
 create table category(
  "id" serial primary key,
  "title" text not null,
+ "image" text not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null
 );
@@ -205,6 +206,32 @@ create table vopros_atvet(
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null  
 );
+
+create table siz_uchun(
+   "id" SERIAL PRIMARY KEY,
+ "food_ca_id" integer not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+)
+create table oshpazdan_taom(
+   "id" SERIAL PRIMARY KEY,
+ "food_ca_id" integer not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+)
+create table shirinliklar(
+   "id" SERIAL PRIMARY KEY,
+ "food_ca_id" integer not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+)
+create table soglom(
+   "id" SERIAL PRIMARY KEY,
+ "food_ca_id" integer not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+)
+
 INSERT INTO users (password, email, phone, place, name, address, city, country, postal_code, about_me, username, lastname, image)
 VALUES ('a', 'a', 'a', 'place_value', 'name_value', 'address_value', 'city_value', 'country_value', 'postal_code_value', 'about_me_value', 'username_value', 'lastname_value', 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
 INSERT INTO foods (user_povar_id, category_id, food_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image)
