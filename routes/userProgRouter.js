@@ -37,7 +37,7 @@ router.get('/userprog/header', async (req, res) => {
 for (let i = 0; i < result3.rows.length; i++) {
 for (let j = 0; j < result5.rows.length; j++) {
  if(result3.rows[i].id==result5.rows[j].user_id){
-  result3.rows[i].ish_yonalishi_title=result5.rows[j].title
+  result3.rows[i].ish_yonalishi_title=result5.rows[j].ish_yonalishi
  }
 }}
 
