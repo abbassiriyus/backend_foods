@@ -40,8 +40,7 @@ for (let j = 0; j < result5.rows.length; j++) {
   result3.rows[i].ish_yonalishi_title=result5.rows[j].ish_yonalishi
  }
 }}
-
-    for (let i = 0; i < result2.rows.length; i++) {
+for (let i = 0; i < result2.rows.length; i++) {
       result2.rows[i].mark=5
       result2.rows[i].mark_org=0
      for (let j = 0; j < result4.rows.length; j++) {
@@ -69,12 +68,9 @@ for (let j = 0; j < result3.rows.length; j++) {
     result.rows[i].name=result3.rows[j].name
     result.rows[i].ish_yonalishi_title=result3.rows[j].ish_yonalishi_title
     result.rows[i].username=result3.rows[j].username
-
- 
   }
   }
 }
-
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error });
