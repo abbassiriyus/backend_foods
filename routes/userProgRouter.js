@@ -82,7 +82,6 @@ router.get('/userprog/:id', (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM user_prog WHERE id = $1';
   const values = [id];
-
   db.query(query, values)
     .then(result => {
       if (result.rows.length === 0) {
