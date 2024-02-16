@@ -59,6 +59,7 @@ if(result2.rows[j].id==result.rows[i].food_id){
   result.rows[i].food_name=result2.rows[j].food_name
   result.rows[i].mark=result2.rows[j].mark
   result.rows[i].mark_org=result2.rows[j].mark_org
+  result.rows[i].user_image=result2.rows[j].image
 }
 }
 for (let j = 0; j < result3.rows.length; j++) {

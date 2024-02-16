@@ -57,6 +57,7 @@ create table user_povar(
  "deskription" text not null,
  "expertise" text not null,
  "place" text not null,
+  UNIQUE(user_id),
  "ish_yonalishi" text not null,
  "is_prepared" text not null,
  "time_create" timestamp default current_timestamp not null,
