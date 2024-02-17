@@ -3,10 +3,10 @@ const router = express.Router();
 const db = require('../db'); // PostgreSQL bog'lanish obyekti
 
 // CREATE - Yaratish
-router.post('/gl_desert', async (req, res) => {
+router.post('/gl_foods', async (req, res) => {
   try {
     const { food_ca_id } = req.body;
-    const query = 'INSERT INTO gl_desert (food_ca_id) VALUES ($1) RETURNING *';
+    const query = 'INSERT INTO gl_foods (food_ca_id) VALUES ($1) RETURNING *';
     const values = [food_ca_id];
     const result = await db.query(query, values);
     res.json(result.rows[0]);
@@ -16,10 +16,10 @@ router.post('/gl_desert', async (req, res) => {
 });
 
 // READ - O'qish
-router.get('/gl_desert/:id', async (req, res) => {
+router.get('/gl_foods/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const query = 'SELECT * FROM gl_desert WHERE id = $1';
+    const query = 'SELECT * FROM gl_foods WHERE id = $1';
     const values = [id];
 
     const result = await db.query(query, values);
@@ -33,11 +33,11 @@ router.get('/gl_desert/:id', async (req, res) => {
   }
 });
 // READ - O'qish
-router.get('/gl_desert/', async (req, res) => {
+router.get('/gl_foods/', async (req, res) => {
     try {
       const query = 'SELECT * FROM foods';
       const result = await db.query(query);
-      const query1 = 'SELECT * FROM gl_desert';
+      const query1 = 'SELECT * FROM gl_foods';
       const result1 = await db.query(query1);
       var send_data=[]
       for (let i = 0; i < result.rows.length; i++) {
@@ -59,11 +59,11 @@ router.get('/gl_desert/', async (req, res) => {
   });
 
 // UPDATE - O'zgartirish
-router.put('/gl_desert/:id', async (req, res) => {
+router.put('/gl_foods/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const { food_ca_id } = req.body;
-    const query = 'UPDATE gl_desert SET food_ca_id = $1, time_update = current_timestamp WHERE id = $2 RETURNING *';
+    const query = 'UPDATE gl_foods SET food_ca_id = $1, time_update = current_timestamp WHERE id = $2 RETURNING *';
     const values = [food_ca_id, id];
 
     const result = await db.query(query, values);
@@ -78,10 +78,10 @@ router.put('/gl_desert/:id', async (req, res) => {
 });
 
 // DELETE - O'chirish
-router.delete('/gl_desert/:id', async (req, res) => {
+router.delete('/gl_foods/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const query = 'DELETE FROM gl_desert WHERE id = $1';
+    const query = 'DELETE FROM gl_foods WHERE id = $1';
     const values = [id];
 
     await db.query(query, values);
