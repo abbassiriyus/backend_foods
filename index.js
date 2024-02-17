@@ -29,6 +29,11 @@ const headerSizUchun=require('./routes/headerSizUchun.js')
 const ishyonalishiRouter=require('./routes/ishyonalishiRouter.js')
 const headeroshpazdanTaom=require('./routes/headeroshpazdanTaom.js')
 const headerSoglom=require('./routes/headerSoglom.js')
+const glDesertRouter=require('./routes/glDesertRouter.js')
+const glFoodsRouter=require('./routes/glFoodsRouter.js')
+const glProductRouter=require('./routes/glProductRouter.js')
+
+
 
 
 const adminRouter=require('./routes/adminRouter.js')
@@ -42,6 +47,9 @@ app.use(express.static('./uploads'))
 app.use(cors({origin: '*'}))
 
 app.use('/admin',adminRouter)
+app.use('/api',glDesertRouter)
+app.use('/api',glFoodsRouter)
+app.use('/api',glProductRouter)
 app.use('/api',forCooksRouter)
 app.use('/api',headerSizUchun)
 app.use('/api',foodmarkRouter)
