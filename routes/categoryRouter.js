@@ -21,6 +21,16 @@ router.get('/category', async (req, res) => {
   try {
     const query = 'SELECT * FROM category';
     const result = await db.query(query);
+    const query1 = 'SELECT * FROM foods';
+    const resul1 = await db.query(query1);
+
+    for (let i = 0; i < result.rows.length; i++) {
+  result.rows[i].count=0
+      for (let j = 0; j <resul1.rows.length; j++) {
+ if(result.rows[i].id==resul1.rows[j].category_id){
+  result.rows[i].count++
+ }
+   }}
       res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error });
