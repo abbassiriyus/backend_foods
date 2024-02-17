@@ -252,4 +252,19 @@ create table gl_product(
 INSERT INTO users (password, email, phone, place, name, address, city, country, postal_code, about_me, username, lastname, image)
 VALUES ('a', 'a', 'a', 'place_value', 'name_value', 'address_value', 'city_value', 'country_value', 'postal_code_value', 'about_me_value', 'username_value', 'lastname_value', 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
 INSERT INTO foods (user_povar_id, category_id, food_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image)
-VALUES (1, 1, 'food_name_value', 'portion_value', 'weight_value', 'preparation_time_value', 'storage_condition_value', 'calorie_value', 'proteins_value', 'oils_value', 'carbs_value', 'packages_value', 123, "https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png");
+VALUES (1, 1, 'food_name_value', 'portion_value', 'weight_value', 'preparation_time_value', 'storage_condition_value', 'calorie_value', 'proteins_value', 'oils_value', 'carbs_value', 'packages_value', 123, 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png');
+UPDATE foods
+SET food_name = 'food_name_value',
+    portion = 'portion_value',
+    weight = 'weight_value',
+    preparation_time = 'preparation_time_value',
+    storage_condition = 'storage_condition_value',
+    calorie = 'calorie_value',
+    proteins = 'proteins_value',
+    oils = 'oils_value',
+    carbs = 'carbs_value',
+    packages = 'packages_value',
+    price = 321,
+    image = 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png',
+    user_povar_id = 1 
+WHERE  id = 1;

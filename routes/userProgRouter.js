@@ -55,7 +55,7 @@ for (let j = 0; j < result2.rows.length; j++) {
 if(result2.rows[j].id==result.rows[i].food_id){
   result.rows[i].food_name=result2.rows[j].food_name
   result.rows[i].price=result2.rows[j].price
-  result.rows[i].user_povar_id=result2.rows[j].user_povar_id
+  result.rows[i].user_povar_id==result2.rows[j].user_povar_id
   result.rows[i].food_name=result2.rows[j].food_name
   result.rows[i].mark=result2.rows[j].mark
   result.rows[i].mark_org=result2.rows[j].mark_org

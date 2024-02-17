@@ -53,10 +53,41 @@ router.post('/foods', async (req, res) => {
     try {
       const query = 'SELECT * FROM foods';
       const result = await pool.query(query);
-      res.status(200).json(result.rows);
+      const query2 = 'SELECT * FROM users';
+      const result2 = await pool.query(query2);
+      const query3 = 'SELECT * FROM food_mark';
+      const result3 = await pool.query(query3);
+
+for (let i = 0; i < result2.rows.length; i++) {
+    result2.rows[i].mark=5
+    result2.rows[i].mark_org=0
+ for (let j = 0; j < result3.rows.length; j++) {
+  console.log(result2.rows[i].id,result3.rows[j].user_id);
+ if(result2.rows[i].id==result3.rows[j].user_id){
+    result2.rows[i].mark=(result2.rows[i].mark+result3.rows[j].mark)/2
+    result2.rows[i].mark_org=result2.rows[i].mark_org+1
+    console.log( result2.rows[i].mark);
+ }
+}}
+for (let i = 0; i < result.rows.length; i++) {
+        for (let j = 0; j < result2.rows.length; j++) {
+          if(result.rows[i].user_povar_id==result2.rows[j].id){
+            result.rows[i].user_image=result2.rows[j].image
+            result.rows[i].mark=result2.rows[j].mark
+            result.rows[i].mark_org=result2.rows[j].mark_org
+            result.rows[i].username=result2.rows[j].username
+            result.rows[i].name=result2.rows[j].name
+            result.rows[i].lastname=result2.rows[j].lastname
+          }
+        }
+      }
+      if (result.rows.length === 0) {
+        res.status(404).json({ message: 'Malumot topilmadi' });
+      } else {
+        res.json(result.rows);
+      }
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message  });
+      res.status(500).json({ error: error.message });
     }
   });
   
