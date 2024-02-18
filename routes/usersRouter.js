@@ -24,19 +24,27 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// Token yaratma endpoint'i
-router.post('/login', (req, res) => {
-  const { email, password, phone } = req.body;
-  if ((!email || !password) && (!phone || !password)) {
-    return res.status(400).json({ error: 'Email ve password veya phone ve password alanları zorunludur.' });
+
+router.post('/login', async (req, res) => {
+  const { phone, password } = req.body;
+  const query = 'SELECT * FROM users WHERE phone = $1';
+  const result = await pool.query(query, [phone]);
+
+  if (!phone || !password) {
+    return res.status(400).json({ error: 'Phone ve password alanları zorunludur.' });
   }
-  // Burada email ve password veya phone ve password bilgilerini kullanarak token yaratıyoruz
-  const payload = { email, password, phone };
+  if (result.rows.length === 0) {
+    return res.status(401).json({ error: 'Geçersiz telefon numarası veya şifre.' });
+  }
+  const payload = { phone };
   const token = jwt.sign(payload, process.env.SECRET_KEY);
+if(result.rows[0].password===password){
+  res.json({ token,user:result.rows });
+}else{
+  res.status(500).send("parolar xato kiritilgan")
+}
 
-  res.json({ token });
 });
-
 
 
 // Get all users
@@ -164,12 +172,11 @@ res.status(201).json({ id: result2.rows[0].id, code });
     
   } catch (error) {
     console.error('Hata:', error);
-    res.status(500).json({ error: 'Bir hata oluştu' });
+    res.status(500).json({ error: error.message });
   }
 });
 router.post('/verify2', async (req, res) => {
   const { phone } = req.body;
-
   try {
     const code = generateVerificationCode();
     const query2 = 'SELECT * FROM users WHERE phone = $1';
@@ -186,6 +193,33 @@ res.status(200).send("succsess")
   }
 });
 
+router.post('/verify/check', async (req, res) => {
+  const { phone, code } = req.body;
+  try {
+    const query = 'SELECT * FROM verify WHERE phone = $1 AND code = $2';
+    const values = [phone, code];
+    const result = await pool.query(query, values);
+    if (result.rows.length > 0) {
+      // Doğrulama kodu doğru
+      const token = jwt.sign({ phone }, "secretKey"); // Token oluşturma
+    const query1 = 'SELECT * FROM users WHERE phone = $1';
+    const values1 = [phone];
+    const result1 = await pool.query(query1, values1);
+    if(result1.rows.length>0){
+      res.json({ valid: true, token,user:result1.rows });
+    }else{
+      res.json({ valid: true, token });
+    }
+      
+    } else {
+      // Doğrulama kodu yanlış veya eşleşen bir kayıt bulunamadı
+      res.json({ valid: false });
+    }
+  } catch (error) {
+    console.error('Hata:', error);
+    res.status(500).json({ error: 'Bir hata oluştu' });
+  }
+});
 
 
 module.exports=router
