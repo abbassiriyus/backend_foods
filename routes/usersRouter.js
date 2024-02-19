@@ -68,11 +68,41 @@ router.get('/users/:id', async (req, res) => {
     const { id } = req.params;
     const query = 'SELECT * FROM users WHERE id = $1';
     const result = await pool.query(query, [id]);
+    const query1 = 'SELECT * FROM user_povar WHERE user_id = $1';
+    const result1 = await pool.query(query1, [id]);
+    const query2 = 'SELECT * FROM my_kitchen WHERE user_povar_id = $1';
+    const result2 = await pool.query(query2, [id]);
+    const query3 = 'SELECT * FROM document WHERE user_povar_id = $1';
+    const result3 = await pool.query(query3, [id]);
+    const query4 = 'SELECT * FROM diploma WHERE user_povar_id = $1';
+    const result4 = await pool.query(query4, [id]);
+    const query5 = 'SELECT * FROM user_category WHERE user_id = $1';
+    const result5 = await pool.query(query5, [id]);
+    const query6 = 'SELECT * FROM category';
+    const result6 = await pool.query(query6);
 
-    if (result.rows.length === 0) {
+   for (let i = 0; i < result6.rows.length; i++) {
+    result6.rows[i].in_user=false
+     for (let j = 0; j < result5.rows.length; j++) {
+     if(result6.rows[i].id===result5.rows[j].category_id){
+      result6.rows[i].in_user=true
+      result6.rows[i].category_id=result5.rows[j].id
+       }
+     }
+    }
+    if (result.rows.length === 0){
       res.status(404).json({ error: 'User not found' });
-    } else {
-      res.status(200).json(result.rows[0]);
+    }else{
+   if(result1.rows.length===0){
+      result.rows[0].pover=false
+     }else{
+      result.rows[0].pover=result1.rows[0]
+      result.rows[0].kitchen=result2.rows
+      result.rows[0].document=result3.rows
+      result.rows[0].diploma=result4.rows
+      result.rows[0].category=result6.rows
+     }
+  res.status(200).json(result.rows[0]);
     }
   } catch (error) {
     console.error(error);
@@ -200,8 +230,7 @@ router.post('/verify/check', async (req, res) => {
     const values = [phone, code];
     const result = await pool.query(query, values);
     if (result.rows.length > 0) {
-      // Doğrulama kodu doğru
-      const token = jwt.sign({ phone }, "secretKey"); // Token oluşturma
+    const token = jwt.sign({ phone }, "secretKey"); // Token oluşturma
     const query1 = 'SELECT * FROM users WHERE phone = $1';
     const values1 = [phone];
     const result1 = await pool.query(query1, values1);
@@ -210,10 +239,9 @@ router.post('/verify/check', async (req, res) => {
     }else{
       res.json({ valid: true, token });
     }
-      
     } else {
       // Doğrulama kodu yanlış veya eşleşen bir kayıt bulunamadı
-      res.json({ valid: false });
+      res.status(500).json({ error: 'Bir hata oluştu' });
     }
   } catch (error) {
     console.error('Hata:', error);

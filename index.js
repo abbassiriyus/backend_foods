@@ -18,6 +18,8 @@ const foodSellerRouter=require('./routes/foodSellerRouter.js')
 const headerShirinliklar=require('./routes/headerShirinliklar.js')
 
 const companyRouter=require('./routes/companyRouter.js')
+const userCategoryRouter=require('./routes/userCategoryRouter.js')
+
 const roomRouter=require('./routes/roomRouter.js')
 const forCooksRouter=require('./routes/forCooksRouter.js')
 const messagesRouter=require('./routes/messagesRouter.js')
@@ -48,6 +50,7 @@ app.use(cors({origin: '*'}))
 
 app.use('/admin',adminRouter)
 app.use('/api',glDesertRouter)
+app.use('/api',userCategoryRouter)
 app.use('/api',glFoodsRouter)
 app.use('/api',glProductRouter)
 app.use('/api',forCooksRouter)

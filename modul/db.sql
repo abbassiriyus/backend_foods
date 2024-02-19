@@ -36,7 +36,7 @@ create table users(
 
 create table ish_yonalishi(
   "id" serial primary key,
-   "title" text not null,
+  "title" text not null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 )
@@ -68,6 +68,15 @@ create table category(
  "id" serial primary key,
  "title" text not null,
  "image" text not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null
+);
+
+create table user_category(
+  "id" serial primary key,
+  "user_id" integer not null,
+  "category_id" integer not null,
+  UNIQUE(user_id,category_id)
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null
 );
@@ -137,7 +146,7 @@ create table food_mark(
  "time_update" timestamp default current_timestamp not null 
 );
 create table  necessary(
-   "id" serial primary key,
+ "id" serial primary key,
  "file" integer not null,
  "title" text not null,
  "time_create" timestamp default current_timestamp not null,

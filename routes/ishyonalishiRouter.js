@@ -41,7 +41,7 @@ router.get('/ishyonalishi', async (req, res) => {
       if (result.rows.length === 0) {
         res.status(404).json({ message: 'Ma\'lumot topilmadi' });
       } else {
-        res.json(result.rows[0]);
+        res.json(result.rows);
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
