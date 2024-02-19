@@ -84,17 +84,17 @@ router.get('/users/:id', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { password, email, phone, address } = req.body;
+    const { password, email, phone, name } = req.body;
     const query2 = 'SELECT * FROM users WHERE id = $1';
     const result2 = await pool.query(query2, [id]);
     var image=put_image(result2.rows[0].image,req)
-    const query = 'UPDATE users SET password = $1, email = $2, phone = $3, address = $4,image = $5 WHERE id = $6 RETURNING *';
-    const values = [password, email, phone, address,image, id];
+    const query = 'UPDATE users SET password = $1, email = $2, phone = $3, name = $4 , image = $5 WHERE id = $6 RETURNING *';
+    const values = [password, email, phone, name, image, id];
     const result = await pool.query(query, values);
     if (result.rows.length===0){
       res.status(404).json({ error: 'User not found' });
     } else {
-      res.status(200).json(result.rows[0]);
+      res.status(200).json(result.rows);
     }
   } catch (error) {
     console.error(error);
