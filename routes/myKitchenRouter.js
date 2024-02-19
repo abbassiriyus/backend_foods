@@ -8,6 +8,8 @@ router.post('/my_kitchen', async (req, res) => {
     try {
       const { user_povar_id } = req.body;
       var image = upload_image(req);
+      console.log(req.files.image);
+      console.log(image);
       const query =
         'INSERT INTO my_kitchen (user_povar_id, image) VALUES ($1, $2) RETURNING *';
       const values = [user_povar_id, image];

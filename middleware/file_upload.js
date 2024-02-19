@@ -27,6 +27,7 @@ var  upload_image=(req)=>{
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
     send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
+      console.log(send_image_link);
      send_image_link=req.body.image
     }
   return send_image_link
