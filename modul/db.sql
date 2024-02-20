@@ -188,11 +188,13 @@ create table company(
 create table room(
    "id" serial primary key,
    "room_sender" integer not null,
-    "time_create" timestamp default current_timestamp not null,
+   "room_get" integer not null,
+   "time_create" timestamp default current_timestamp not null,
    "time_update" timestamp default current_timestamp not null 
 );
 CREATE TABLE messages (
   "id" SERIAL PRIMARY KEY,
+  "room_id" integer not null,
   "message" TEXT NOT NULL,
   "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 

@@ -64,12 +64,11 @@ router.put('/user_category/:user_id', async (req, res) => {
 });
 
 // Kullanıcı kategorisini silme
-router.delete('/user_category/:user_id', async (req, res) => {
-  const { user_id } = req.params;
-
+router.delete('/user_category/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    const query = 'DELETE FROM user_category WHERE user_id = $1';
-    const values = [user_id];
+    const query = 'DELETE FROM user_category WHERE id = $1';
+    const values = [id];
     await db.query(query, values);
     res.json({ message: 'Kategori silindi.' });
   } catch (error) {

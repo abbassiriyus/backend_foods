@@ -96,7 +96,7 @@ router.put('/user_povar/:id', async (req, res) => {
     const { id } = req.params;
     const { user_id, deskription, expertise, place, is_prepared,ish_yonalishi } = req.body;
     const query =
-      'UPDATE user_povar SET user_id = $1, deskription = $2, expertise = $3, place = $4, is_prepared = $5,ish_yonalishi=$6, time_update = current_timestamp WHERE id = $t RETURNING *';
+      'UPDATE user_povar SET user_id = $1, deskription = $2, expertise = $3, place = $4, is_prepared = $5,ish_yonalishi=$6, time_update = current_timestamp WHERE id = $7 RETURNING *';
     const values = [user_id, deskription, expertise, place, is_prepared,ish_yonalishi, id];
     const result = await pool.query(query, values);
     if (result.rows.length === 0) {

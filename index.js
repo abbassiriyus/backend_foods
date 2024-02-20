@@ -83,13 +83,11 @@ app.get('/doc', (_req, res) => {
   { encoding: 'utf8', flag: 'r' });
 res.status(200).send(data)
 })
-// Create an HTTP server
+
 const server = http.createServer(app);
 
-// Create a Socket.IO instance
 const io = socketIO(server);
 
-// Socket.IO event handlers
 io.on('connection', (socket) => {
   console.log('A user connected');
 
