@@ -106,7 +106,7 @@ create table foods(
  "id" serial primary key,
  "user_povar_id" integer not null,
  "category_id" integer not null,
- "food_name" text not null,
+ "foods_name" text not null,
  "portion" text not null,
  "weight" text not null,
  "preparation_time" text not null,
@@ -147,7 +147,7 @@ create table food_mark(
 );
 create table  necessary(
  "id" serial primary key,
- "file" integer not null,
+ "file" text not null,
  "title" text not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 

@@ -60,15 +60,19 @@ if(file_tit.includes("local_image")){
 }
 var  upload_file=(req)=>{
   var send_image_link=""
+  console.log(req,"sdsds");
   if(req.files && req.files.file){
     var file=req.files.file
     var name_file=Date.now()+getRandomInt(12312321)+"local_image"
     var file_tit=file.name.slice(file.name.lastIndexOf('.'))
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
     send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
-    }else{
-     send_image_link=req.body.image
+    }else{ 
+     
+     send_image_link=req.body.file
+    
     }
+
   return send_image_link
   }
 
@@ -92,7 +96,7 @@ if(file_tit.includes("local_image")){
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
     send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
-     send_image_link=req.body.image
+     send_image_link=req.body.file
     }
   return send_image_link
 

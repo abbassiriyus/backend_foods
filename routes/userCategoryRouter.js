@@ -71,7 +71,6 @@ router.delete('/user_category/:user_id', async (req, res) => {
     const query = 'DELETE FROM user_category WHERE user_id = $1';
     const values = [user_id];
     await db.query(query, values);
-
     res.json({ message: 'Kategori silindi.' });
   } catch (error) {
     console.error('Hata:', error);

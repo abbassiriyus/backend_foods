@@ -13,10 +13,11 @@ router.post('/necessary', async (req, res) => {
       const query =
         'INSERT INTO necessary (file, title) VALUES ($1, $2) RETURNING *';
       const values = [file, title];
+      console.log(file);
       const result = await pool.query(query, values);
       res.status(201).json(result.rows[0]);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       res.status(500).json({ error: error.message  });
     }
   });
