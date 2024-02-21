@@ -4,51 +4,60 @@ const { upload_image, put_image, delete_file, delete_image } = require('../middl
 const router = express.Router();
 
 // Create a foods record
+
+// /foods POST endpointi
 router.post('/foods', async (req, res) => {
-    try {
-      const {
-        user_povar_id,
-        category_id,
-        foods_name,
-        portion,
-        weight,
-        preparation_time,
-        storage_condition,
-        calorie,
-        proteins,
-        oils,
-        carbs,
-        packages,
-        price
-      } = req.body;
-      var image = upload_image(req);
-      const query =
-        'INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *';
-      const values = [
-        user_povar_id,
-        category_id,
-        foods_name,
-        portion,
-        weight,
-        preparation_time,
-        storage_condition,
-        calorie,
-        proteins,
-        oils,
-        carbs,
-        packages,
-        price,
-        image,
-      ];
-      const result = await pool.query(query, values);
-      res.status(201).json(result.rows[0]);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message  });
-    }
-  });
-  
-  // Read all foods records
+  try {
+    const {
+      user_povar_id,
+      category_id,
+      foods_name,
+      portion,
+      weight,
+      preparation_time,
+      storage_condition,
+      calorie,
+      proteins,
+      oils,
+      description,
+      dastafka_us,
+      carbs,
+      packages,
+      price,
+      image
+    } = req.body;
+
+    const query = `INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, description, dastafka_us, carbs, packages, price, image)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, current_timestamp, current_timestamp)
+                   RETURNING *`;
+
+    const values = [
+      user_povar_id,
+      category_id,
+      foods_name,
+      portion,
+      weight,
+      preparation_time,
+      storage_condition,
+      calorie,
+      proteins,
+      oils,
+      description,
+      dastafka_us,
+      carbs,
+      packages,
+      price,
+      image
+    ];
+
+    const result = await pool.query(query, values);
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating food:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
   router.get('/foods', async (req, res) => {
     try {
       const query = 'SELECT * FROM foods';
@@ -57,7 +66,6 @@ router.post('/foods', async (req, res) => {
       const result2 = await pool.query(query2);
       const query3 = 'SELECT * FROM food_mark';
       const result3 = await pool.query(query3);
-
 for (let i = 0; i < result2.rows.length; i++) {
     result2.rows[i].mark=5
     result2.rows[i].mark_org=0
@@ -81,19 +89,14 @@ for (let i = 0; i < result.rows.length; i++) {
           }
         }
       }
-      if (result.rows.length === 0) {
-        res.status(404).json({ message: 'Malumot topilmadi' });
-      } else {
+     
         res.status(200).json(result.rows);
-      }
+      
     } catch (error) {
+      console.log(error.message);
       res.status(500).json({ error: error.message });
     }
   });
-    // const query2 = 'SELECT * FROM users';
-      // const result2 = await pool.query(query2);
-      // const query3 = 'SELECT * FROM food_mark';
-      // const result3 = await pool.query(query3);
 
   // Read a foods record by ID
 router.get('/foods/:id', async (req, res) => {

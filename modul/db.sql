@@ -109,11 +109,13 @@ create table foods(
  "foods_name" text not null,
  "portion" text not null,
  "weight" text not null,
- "preparation_time" text not null,
+ "preparation_time" integer not null,
  "storage_condition" text not null,
  "calorie" text not null,
  "proteins" text not null, 
  "oils" text not null,
+ "description" text not null,
+ "dastafka_us" text not null,
  "carbs" text not null,
  "packages" text not null,
  "price" integer not null,
@@ -279,3 +281,5 @@ SET food_name = 'food_name_value',
     image = 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png',
     user_povar_id = 1 
 WHERE  id = 1;
+INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, description, dastafka_us, carbs, packages, price, image, time_create, time_update)
+VALUES (5, 1, 'Pizza', '1 slice', '200g', '30 minutes', 'Refrigerated', '500 kcal', '10g', '15g', 'Delicious pizza', 'For delivery', '40g', 'Box', 10, 'https://altynachar.com/mtk44/586-thickbox_default/garysyk-pissa.jpg', current_timestamp, current_timestamp);
