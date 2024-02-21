@@ -104,16 +104,18 @@ router.get('/foods/:id', async (req, res) => {
       const { id } = req.params;
       const query = 'SELECT * FROM foods WHERE id = $1';
       const result = await pool.query(query, [id]);
-if (result.rows.length === 0) {
+    if (result.rows.length === 0) {
     res.status(404).json({ message: 'Malumot topilmadi' });
-    } else {
-    var one_food=result.rows[0]
-    const query2 = 'SELECT * FROM users WHERE id = $1';
+      } else {
+      var one_food=result.rows[0]
+      const query2 = 'SELECT * FROM users WHERE id = $1';
     const result2 = await pool.query(query2, [one_food.user_povar_id]);
     if(result2.rows.length===0){
     res.status(404).send("bu shirinlik uchun user topilmadi")
     }else{
      var food_user=result2.rows[0]
+     const queryw = 'SELECT * FROM foods WHERE user_povar_id = $1';
+     const food = await pool.query(queryw, [food_user.id]);
       const query3 = 'SELECT * FROM food_mark WHERE user_id = $1';
       const result3 = await pool.query(query3,[food_user.id]);
       const query6 = 'SELECT * FROM user_povar WHERE user_id = $1';
@@ -122,10 +124,25 @@ if (result.rows.length === 0) {
       const usercategory = await pool.query(query4,[food_user.id]);
       const query5 = 'SELECT * FROM category';
       const category = await pool.query(query5); 
+      const query7 = 'SELECT * FROM users';
+      const user = await pool.query(query7); 
+for (let i = 0; i < result3.rows.length; i++) {
+for (let j = 0; j < user.rows.length; j++) {
+if(result3.rows[i].user_id===user.rows[j].id){
+  result3.rows[i].image=user.rows[j].image
+  result3.rows[i].name=user.rows[j].name
+  result3.rows[i].username=user.rows[j].username
+  result3.rows[i].lastname=user.rows[j].lastname
+
+
+}
+}
+}
+
+
       console.log(usercategory.rows);
 for (let i = 0; i < usercategory.rows.length; i++) {
 for (let j = 0; j < category.rows.length; j++) {
- 
  if(category.rows[j].id===usercategory.rows[i].category_id){
   usercategory.rows[i].title=category.rows[j].title
  }
@@ -142,7 +159,7 @@ food_user.pover=pover.rows[0]
 for (let i = 0; i < result3.rows.length; i++) {
 food_user.mark=(result3.rows[i].mark+food_user.mark)/2
 }
-res.status(200).json({food:one_food,user:food_user,comment:result3.rows});
+res.status(200).json({food:one_food,user:food_user,comment:result3.rows,dr_food:food.rows});
     
 }}
    } catch (error) {
