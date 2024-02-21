@@ -41,30 +41,46 @@ router.get('/getpovar', async (req, res) => {
     const result = await pool.query(query);
     const result1 = await pool.query(query1);
     const result2 = await pool.query(query2);
-var senData=[]    
-    for (let i = 0; i < result.rows.length; i++) {
-   for (let j = 0; j < result1.rows.length; j++) {
-    console.log(result.rows[i].user_id,result1.rows[j].id);
-    if(result.rows[i].user_id==result1.rows[j].id){
-result.rows[i].name=result1.rows[j].name
-result.rows[i].about_me=result1.rows[j].about_me
-result.rows[i].username=result1.rows[j].username
-result.rows[i].lastname=result1.rows[j].lastname
-result.rows[i].image=result1.rows[j].image
-result.rows[i].phone=result1.rows[j].phone
-senData.push(result.rows[i])
-    }}}
-  for (let i = 0; i < senData.length; i++) {
-   senData[i].foods=[]
-    for (let j = 0; j < result2.rows.length; j++) {
-     if(senData[i].id==result2.rows[j].user_povar_id){
-   senData[i].foods.push(result2.rows[j])
-     }
-   }
-  }
+
+    const query3 = 'SELECT * FROM food_mark';
+    const result3 = await pool.query(query3);
+
+    for (let i = 0; i <result.rows.length; i++) {
+     for (let j = 0; j < result1.rows.length; j++) {
+     if(result.rows[i].user_id==result1.rows[j].id){
+      result.rows[i].name=result1.rows[j].name
+      result.rows[i].address=result1.rows[j].address
+      result.rows[i].city=result1.rows[j].city
+      result.rows[i].country=result1.rows[j].country
+      result.rows[i].postal_code=result1.rows[j].postal_code
+      result.rows[i].about_me=result1.rows[j].about_me
+      result.rows[i].username=result1.rows[j].username
+      result.rows[i].lastname=result1.rows[j].lastname
+      result.rows[i].image=result1.rows[j].image
+     }}}
 
 
-    res.status(200).json(senData);
+for (let i = 0; i < result.rows.length; i++) {
+result.rows[i].mark=5
+result.rows[i].mark_org=0
+  for (let j = 0; j < result3.rows.length; j++) {
+   if(result.rows[i].user_id==result3.rows[j].user_id){
+  result.rows[i].mark_org++
+  result.rows[i].mark=(result.rows[i].mark+result3.rows[j].mark)/2
+ }
+}
+  
+}
+
+
+for (let i = 0; i <result.rows.length; i++) {
+      result.rows[i].foods=[]
+      for (let j = 0; j < result2.rows.length; j++) {
+      if(result.rows[i].user_id==result2.rows[j].user_povar_id){
+        result.rows[i].foods.push(result2.rows[j])
+      }
+      }}
+    res.status(200).json(result.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message  });

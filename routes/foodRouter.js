@@ -84,27 +84,65 @@ for (let i = 0; i < result.rows.length; i++) {
       if (result.rows.length === 0) {
         res.status(404).json({ message: 'Malumot topilmadi' });
       } else {
-        res.json(result.rows);
+        res.status(200).json(result.rows);
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   });
-  
+    // const query2 = 'SELECT * FROM users';
+      // const result2 = await pool.query(query2);
+      // const query3 = 'SELECT * FROM food_mark';
+      // const result3 = await pool.query(query3);
+
   // Read a foods record by ID
   router.get('/foods/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const query = 'SELECT * FROM foods WHERE id = $1';
       const result = await pool.query(query, [id]);
-      if (result.rows.length === 0) {
-        res.status(404).json({ error: 'Record not found' });
-      } else {
-        res.status(200).json(result.rows[0]);
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message  });
+if (result.rows.length === 0) {
+    res.status(404).json({ message: 'Malumot topilmadi' });
+    } else {
+    var one_food=result.rows[0]
+    const query2 = 'SELECT * FROM users WHERE id = $1';
+    const result2 = await pool.query(query2, [one_food.user_povar_id]);
+    if(result2.rows.length===0){
+    res.status(404).send("bu shirinlik uchun user topilmadi")
+    }else{
+     var food_user=result2.rows[0]
+      const query3 = 'SELECT * FROM food_mark WHERE user_id = $1';
+      const result3 = await pool.query(query3,[food_user.id]);
+      const query6 = 'SELECT * FROM user_povar WHERE user_id = $1';
+      const pover = await pool.query(query6,[food_user.id]);
+      const query4 = 'SELECT * FROM user_category WHERE user_id = $1';
+      const usercategory = await pool.query(query4,[food_user.id]);
+      const query5 = 'SELECT * FROM category';
+      const category = await pool.query(query5);
+for (let i = 0; i < usercategory.rows.length; i++) {
+for (let j = 0; j < category.rows.length; j++) {
+ if(category.rows[i].id===usercategory.rows[j].category_id){
+  usercategory.rows[j].title=category.rows[i].title
+ }
+}}
+if(pover.rows.length==0){
+  food_user.pover=false
+}else{
+food_user.pover=pover.rows[0]
+}     
+     food_user.category=usercategory.rows
+     food_user.mark_org=result3.rows.length
+     food_user.mark=5
+
+for (let i = 0; i < result3.rows.length; i++) {
+food_user.mark=(result3.rows[i].mark+food_user.mark)/2
+}
+res.status(200).json({food:one_food,user:food_user,comment:result3.rows});
+    
+}}
+   } catch (error) {
+    console.log(error);
+      res.status(500).json({ error: error.message });
     }
   });
   
