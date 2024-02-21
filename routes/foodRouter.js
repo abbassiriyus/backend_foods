@@ -96,7 +96,7 @@ for (let i = 0; i < result.rows.length; i++) {
       // const result3 = await pool.query(query3);
 
   // Read a foods record by ID
-  router.get('/foods/:id', async (req, res) => {
+router.get('/foods/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const query = 'SELECT * FROM foods WHERE id = $1';
@@ -118,11 +118,13 @@ if (result.rows.length === 0) {
       const query4 = 'SELECT * FROM user_category WHERE user_id = $1';
       const usercategory = await pool.query(query4,[food_user.id]);
       const query5 = 'SELECT * FROM category';
-      const category = await pool.query(query5);
+      const category = await pool.query(query5); 
+      console.log(usercategory.rows);
 for (let i = 0; i < usercategory.rows.length; i++) {
 for (let j = 0; j < category.rows.length; j++) {
- if(category.rows[i].id===usercategory.rows[j].category_id){
-  usercategory.rows[j].title=category.rows[i].title
+ 
+ if(category.rows[j].id===usercategory.rows[i].category_id){
+  usercategory.rows[i].title=category.rows[j].title
  }
 }}
 if(pover.rows.length==0){
