@@ -38,8 +38,22 @@ router.get('/ishyonalishi', async (req, res) => {
     try {
       const query = 'SELECT * FROM ish_yonalishi';
       const result = await db.query(query);
+      const query2 = 'SELECT * FROM user_povar';
+      const result2 = await db.query(query2);
+for (let i = 0; i < result.rows.length; i++) {
+  result.rows[i].count=0
+for (let j = 0; j < result2.rows.length; j++) {
+ if(result.rows[i].title==result2.rows[j].ish_yonalishi){
+  result.rows[i].count++
+ }
+    
+}
+}
+
+
+
       if (result.rows.length === 0) {
-        res.status(404).json({ message: 'Ma\'lumot topilmadi' });
+        res.status(404).json({ message: 'Malumot topilmadi' });
       } else {
         res.json(result.rows);
       }
