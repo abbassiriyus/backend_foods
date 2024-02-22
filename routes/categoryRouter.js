@@ -23,6 +23,11 @@ router.get('/category', async (req, res) => {
     const result = await db.query(query);
     const query1 = 'SELECT * FROM foods';
     const resul1 = await db.query(query1);
+    const query2 = 'SELECT * FROM user_povar';
+    const resul2 = await db.query(query2);
+    const query3 = 'SELECT * FROM user_category';
+    const resul3 = await db.query(query3);
+
 
     for (let i = 0; i < result.rows.length; i++) {
   result.rows[i].count=0
@@ -31,6 +36,25 @@ router.get('/category', async (req, res) => {
   result.rows[i].count++
  }
    }}
+
+
+   for (let i = 0; i < resul2.rows.length; i++) {
+    resul2.rows[i].count1=0
+  for (let j = 0; j < resul3.rows.length; j++) {
+  if(resul2.rows[i].user_id==resul3.rows[j].user_id){
+    resul2.rows[i].category_id=resul3.rows[j].category_id
+    resul2.rows[i].count1++
+  }}}
+  for (let i = 0; i < result.rows.length; i++) {
+
+ for (let j = 0; j < resul2.rows.length; j++) {
+ if(result.rows[i].id==resul2.rows[j].category_id){
+  result.rows[i].count1=resul2.rows[j].count1
+ }
+ }
+  }
+
+
       res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error: error });

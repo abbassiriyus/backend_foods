@@ -40,26 +40,24 @@ for (let j = 0; j < result5.rows.length; j++) {
   result3.rows[i].ish_yonalishi_title=result5.rows[j].ish_yonalishi
  }
 }}
-for (let i = 0; i < result2.rows.length; i++) {
-      result2.rows[i].mark=5
-      result2.rows[i].mark_org=0
+for (let i = 0; i < result3.rows.length; i++) {
+      result3.rows[i].mark=5
+      result3.rows[i].mark_org=0
      for (let j = 0; j < result4.rows.length; j++) {
-      if(result2.rows[i].id==result4.rows[j].user_id){
-        result2.rows[i].mark=(result4.rows[j].mark+result2.rows[i].mark)/2
-        result2.rows[i].mark_org=result2.rows[i].mark_org+1
+      if(result3.rows[i].id==result4.rows[j].user_id){
+        result3.rows[i].mark=(result4.rows[j].mark+result3.rows[i].mark)/2
+        result3.rows[i].mark_org=result3.rows[i].mark_org+1
       }
      }
     }
 for (let i = 0; i < result.rows.length; i++) {
 for (let j = 0; j < result2.rows.length; j++) {
 if(result2.rows[j].id==result.rows[i].food_id){
-  result.rows[i].food_name=result2.rows[j].food_name
+  result.rows[i].foods_name=result2.rows[j].foods_name
   result.rows[i].price=result2.rows[j].price
   result.rows[i].user_povar_id==result2.rows[j].user_povar_id
   result.rows[i].food_name=result2.rows[j].food_name
-  result.rows[i].mark=result2.rows[j].mark
-  result.rows[i].mark_org=result2.rows[j].mark_org
-  result.rows[i].user_image=result2.rows[j].image
+ 
 }
 }
 for (let j = 0; j < result3.rows.length; j++) {
@@ -68,7 +66,9 @@ for (let j = 0; j < result3.rows.length; j++) {
     result.rows[i].lastname=result3.rows[j].lastname
     result.rows[i].name=result3.rows[j].name
     result.rows[i].ish_yonalishi_title=result3.rows[j].ish_yonalishi_title
-    result.rows[i].username=result3.rows[j].username
+    result.rows[i].user_image=result3.rows[j].image
+     result.rows[i].mark=result3.rows[j].mark
+  result.rows[i].mark_org=result3.rows[j].mark_org
   }
   }
 }

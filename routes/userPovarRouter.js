@@ -111,6 +111,61 @@ for (let i = 0; i <result.rows.length; i++) {
   }
 });
 
+// Get all users
+router.get('/getpovar/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = 'SELECT address,name,city,country,username,about_me,username,lastname,image FROM users WHERE id = $1';
+    const oneuser = await pool.query(query, [id]);
+    if(oneuser.rows.length===0){
+    res.status(404).send('user Topilmadi')
+    }else{
+    const query2 = 'SELECT * FROM foods WHERE user_povar_id = $1';
+    const foods = await pool.query(query2, [id]);
+    const query1 = 'SELECT * FROM my_kitchen WHERE user_povar_id = $1';
+    const kitchen = await pool.query(query1, [id]);
+    const query3 = 'SELECT * FROM food_mark WHERE user_id = $1';
+    const mark = await pool.query(query3, [id]);
+    const query4 = 'SELECT * FROM user_category WHERE user_id = $1';
+    const cateuser = await pool.query(query4, [id]);
+    const query6 = 'SELECT * FROM user_povar WHERE user_id = $1';
+    const pover = await pool.query(query6, [id]);
+    const query5 = 'SELECT * FROM category';
+    const category = await pool.query(query5);
+oneuser.rows[0].mark=5
+oneuser.rows[0].mark_org=0
+
+for (let i = 0; i < mark.rows.length; i++) {
+  oneuser.rows[0].mark=(oneuser.rows[0].mark+mark.rows[i].mark)/2
+oneuser.rows[0].mark_org++
+}
+
+    if(pover.rows.length==0){
+oneuser.rows[0].pover=false
+}else{
+  oneuser.rows[0].pover=pover.rows[0]
+}
+    for (let i = 0; i < cateuser.rows.length; i++) {
+for (let j = 0; j < category.rows.length; j++) {
+if(cateuser.rows[i].category_id==category.rows[j].id){
+  cateuser.rows[i].title==category.rows[j].title
+}
+}}
+res.status(200).send({ user:oneuser.rows[0] , category:category.rows ,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
+
+}
+
+    
+  
+
+
+
+
+ } catch (error) {
+  console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // Get a user by ID
