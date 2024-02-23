@@ -1,8 +1,9 @@
-const express = require('express')
-const app = express()
 const bodyParser = require('body-parser');
-const http = require('http');
-const socketIO = require('socket.io');
+const fs=require('fs')
+const fileUpload = require("express-fileupload");
+
+
+
 const userRouter=require('./routes/usersRouter.js')
 const userPovarRouter=require('./routes/userPovarRouter.js')
 const categoryRouter=require('./routes/categoryRouter.js')
@@ -16,10 +17,8 @@ const foodAdvantagesRouter=require('./routes/foodAdvantagesRouter.js')
 const necessaryRouter=require('./routes/necessaryRouter.js')
 const foodSellerRouter=require('./routes/foodSellerRouter.js')
 const headerShirinliklar=require('./routes/headerShirinliklar.js')
-
 const companyRouter=require('./routes/companyRouter.js')
 const userCategoryRouter=require('./routes/userCategoryRouter.js')
-
 const roomRouter=require('./routes/roomRouter.js')
 const forCooksRouter=require('./routes/forCooksRouter.js')
 const messagesRouter=require('./routes/messagesRouter.js')
@@ -27,22 +26,40 @@ const voprosRouter=require('./routes/voprosRouter.js')
 const userProgRouter=require('./routes/userProgRouter.js')
 const foodmarkRouter=require('./routes/foodmarkRouter.js')
 const headerSizUchun=require('./routes/headerSizUchun.js')
-
 const ishyonalishiRouter=require('./routes/ishyonalishiRouter.js')
 const headeroshpazdanTaom=require('./routes/headeroshpazdanTaom.js')
 const headerSoglom=require('./routes/headerSoglom.js')
 const glDesertRouter=require('./routes/glDesertRouter.js')
 const glFoodsRouter=require('./routes/glFoodsRouter.js')
 const glProductRouter=require('./routes/glProductRouter.js')
-
-
-
-
 const adminRouter=require('./routes/adminRouter.js')
-const fileUpload = require("express-fileupload");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+const express = require("express");
+const app = express();
+const http = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
+// app.use(cors());
+
 app.use(fileUpload())
-const cors = require('cors')
-const fs=require('fs')
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static('./uploads'))
@@ -83,56 +100,28 @@ app.get('/doc', (_req, res) => {
   { encoding: 'utf8', flag: 'r' });
 res.status(200).send(data)
 })
-
 const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
 
-const io = socketIO(server);
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  // Join a room
-  socket.on('joinRoom', (roomId) => {
-    socket.join(roomId);
-    console.log(`User joined room ${roomId}`);
+  socket.on("join_room", (data) => {
+    socket.join(data);
   });
 
-  // Leave a room
-  socket.on('leaveRoom', (roomId) => {
-    socket.leave(roomId);
-    console.log(`User left room ${roomId}`);
-  });
-
-  // Receive and broadcast messages in a room
-  socket.on('sendMessage', async (roomId, message) => {
-    try {
-      const query = `
-        INSERT INTO messages (message) VALUES ($1) RETURNING *
-      `;
-      const values = [message];
-      const result = await pool.query(query, values);
-
-      const savedMessage = result.rows[0];
-
-      io.to(roomId).emit('receiveMessage', savedMessage);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-
-  // Handle disconnection
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
   });
 });
 
-
-app.listen(4003, () => {
-    console.log('Сервер запущен')
-    console.log('server started')
-  })
-  
-
+server.listen(4003, () => {
+  console.log("SERVER IS RUNNING");
+});
 
 
 
