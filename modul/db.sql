@@ -31,7 +31,7 @@ create table users(
  "povar"  boolean default false not null,
  "active"  boolean default true not null,
  "time_create" timestamp default current_timestamp not null,
-  "time_update" timestamp default current_timestamp not null
+"time_update" timestamp default current_timestamp not null
 );
 
 create table ish_yonalishi(
