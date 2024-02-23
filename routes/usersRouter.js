@@ -38,12 +38,11 @@ router.post('/login', async (req, res) => {
   }
   const payload = { phone };
   const token = jwt.sign(payload, process.env.SECRET_KEY);
-if(result.rows[0].password===password){
+  if(result.rows[0].password===password){
   res.json({ token,user:result.rows });
 }else{
   res.status(500).send("parolar xato kiritilgan")
 }
-
 });
 
 
@@ -53,13 +52,10 @@ router.get('/users', async (req, res) => {
   try {
     const query = 'SELECT * FROM users';
     const result = await pool.query(query); 
-    console.log(result.rows);
     res.status(200).json(result.rows);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: error.message });
   }
-  res.status(200).send("asdasd")
 });
 
 // Get a user by ID
@@ -167,7 +163,7 @@ router.delete('/users/:id', async (req, res) => {
     const result2 = await pool.query(query2, [id]);
     delete_image(result2.rows[0].image)
     const query = 'DELETE FROM users WHERE id = $1';
-   var {rows} =await pool.query(query, [id]);
+    await pool.query(query, [id]);
     res.status(204).send();
   } catch (error) {
     console.error(error);
