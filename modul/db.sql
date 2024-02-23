@@ -189,8 +189,8 @@ create table company(
 
 create table room(
    "id" serial primary key,
-   "room_sender" integer not null,
-   "room_get" integer not null,
+   "user1" integer not null,
+   "user2" integer not null,
    "time_create" timestamp default current_timestamp not null,
    "time_update" timestamp default current_timestamp not null 
 );
@@ -262,8 +262,8 @@ create table gl_product(
  "time_update" timestamp default current_timestamp not null 
 );
 
-INSERT INTO users (password, email, phone, place, name, address, city, country, postal_code, about_me, username, lastname, image)
-VALUES ('a', 'a', 'a', 'place_value', 'name_value', 'address_value', 'city_value', 'country_value', 'postal_code_value', 'about_me_value', 'username_value', 'lastname_value', 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png');
+INSERT INTO users (password, email, phone, name, address, city, country, postal_code, about_me, username, lastname, image)
+VALUES ('12345678', '12345678', '12345678', 'abbas1', 'tashkent', 'yashnobod', 'uzbekistan', '1212', 'men juda kop vaqt dasturlash bil;an shugullandim ovqatlarni esa qizigi yoq', 'salimov', 'avazjon o`g`li', 'https://www.texnoman.uz/uploads/blogs/347bc522c3567494f296429c72c8c55a.jpg');
 INSERT INTO foods (user_povar_id, category_id, food_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image)
 VALUES (1, 1, 'food_name_value', 'portion_value', 'weight_value', 'preparation_time_value', 'storage_condition_value', 'calorie_value', 'proteins_value', 'oils_value', 'carbs_value', 'packages_value', 123, 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png');
 UPDATE foods

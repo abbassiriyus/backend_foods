@@ -111,10 +111,12 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
+    console.log(data);
     socket.join(data);
   });
 
   socket.on("send_message", (data) => {
+    console.log(data,"asas");
     socket.to(data.room).emit("receive_message", data);
   });
 });
