@@ -1,6 +1,6 @@
 const express = require('express');
 const pool = require('../db'); // Assuming you have a 'db.js' file setting up your database
-const { upload_image, put_image, delete_file, delete_image } = require('../middleware/file_upload');
+const { upload_image, put_image, delete_image } = require('../middleware/file_upload');
 const router = express.Router();
 
 // Create a foods record
