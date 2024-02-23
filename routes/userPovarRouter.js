@@ -115,7 +115,7 @@ for (let i = 0; i <result.rows.length; i++) {
 router.get('/getpovar/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const query = 'SELECT address,name,city,country,username,about_me,username,lastname,image FROM users WHERE id = $1';
+    const query = 'SELECT id,address,name,city,country,username,about_me,username,lastname,image FROM users WHERE id = $1';
     const oneuser = await pool.query(query, [id]);
     if(oneuser.rows.length===0){
     res.status(404).send('user Topilmadi')
@@ -145,13 +145,18 @@ oneuser.rows[0].pover=false
 }else{
   oneuser.rows[0].pover=pover.rows[0]
 }
-    for (let i = 0; i < cateuser.rows.length; i++) {
+  for (let i = 0; i < cateuser.rows.length; i++) {
 for (let j = 0; j < category.rows.length; j++) {
 if(cateuser.rows[i].category_id==category.rows[j].id){
   cateuser.rows[i].title==category.rows[j].title
 }
 }}
-res.status(200).send({ user:oneuser.rows[0] , category:category.rows ,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
+
+console.log(cateuser.rows);
+console.log(oneuser.rows[0]);
+var sencategory=(cateuser.rows).filter(item=>item.user_id==oneuser.rows[0].id)
+console.log((sencategory));
+res.status(200).send({ user:oneuser.rows[0] , category:sencategory ,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
 
 }
 
