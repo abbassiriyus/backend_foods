@@ -35,14 +35,12 @@ router.post('/messages', async (req, res) => {
   router.get('/messages/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const query = 'SELECT * FROM messages WHERE id = $1';
+      const query = 'SELECT * FROM messages WHERE  room_id = $1 ORDER BY time_create ASC;';
       const result = await pool.query(query, [id]);
-      if (result.rows.length === 0) {
-        res.status(404).json({ error: 'Record not found' });
-      } else {
-        res.status(200).json(result.rows[0]);
-      }
-    } catch (error) {
+      
+        res.status(200).json(result.rows);
+    
+     } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message  });
     }
