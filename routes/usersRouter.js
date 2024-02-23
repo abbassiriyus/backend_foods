@@ -161,7 +161,11 @@ router.delete('/users/:id', async (req, res) => {
     const { id } = req.params;
     const query2= 'SELECT * FROM users WHERE id = $1';
     const result2 = await pool.query(query2, [id]);
-    delete_image(result2.rows[0].image)
+if(result2.rows.length!=0 && result2.rows[0].image){
+  delete_image(result2.rows[0].image)
+
+}
+   
     const query = 'DELETE FROM users WHERE id = $1';
     await pool.query(query, [id]);
     res.status(204).send();
