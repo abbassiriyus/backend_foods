@@ -196,6 +196,7 @@ create table room(
 );
 CREATE TABLE messages (
   "id" SERIAL PRIMARY KEY,
+  "user_id" integer not null,
   "room_id" integer not null,
   "message" TEXT NOT NULL,
   "time_create" timestamp default current_timestamp not null,

@@ -57,6 +57,7 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const pool =require('./db.js')
 // app.use(cors());
 
 app.use(fileUpload())
@@ -111,13 +112,17 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
-    console.log(data);
     socket.join(data);
   });
 
-  socket.on("send_message", (data) => {
-    console.log(data,"asas");
-    socket.to(data.room).emit("receive_message", data);
+  socket.on("send_message", async (data) => {
+    console.log(data);
+    const query = `INSERT INTO messages (message,user_id,room_id) VALUES ($1,$2,$3) RETURNING *`;
+  const values = [data.message,data.chat , data.room];
+  const result = await pool.query(query, values);
+  const query1 ='SELECT * FROM messages WHERE user_id = $1 AND room_id=$2;'; 
+  const result1 = await pool.query(query1,[ data.chat , data.room ]);
+    socket.to(data.room).emit("receive_message",result1.rows);
   });
 });
 
