@@ -35,7 +35,7 @@ router.get('/gl_otzif', (req, res) => {
 });
 
 // READ - GET so'rovi by ID
-router.get('/:id', (req, res) => {
+router.get('/gl_otzif/:id', (req, res) => {
     const id = req.params.id;
   
     const query = 'SELECT * FROM gl_otzif WHERE id = $1';

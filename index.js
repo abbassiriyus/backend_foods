@@ -122,11 +122,12 @@ io.on("connection", (socket) => {
   socket.on("send_message", async (data) => {
     console.log(data);
     const query = `INSERT INTO messages (message,user_id,room_id) VALUES ($1,$2,$3) RETURNING *`;
-  const values = [data.message,data.chat , data.room];
-  const result = await pool.query(query, values);
-  const query1 ='SELECT * FROM messages WHERE user_id = $1 AND room_id=$2;'; 
-  const result1 = await pool.query(query1,[ data.chat , data.room ]);
-    socket.to(data.room).emit("receive_message",result1.rows);
+    const values = [data.message,data.chat , data.room];
+    const result = await pool.query(query, values);
+    const query1 ='SELECT * FROM messages WHERE room_id=$1;'; 
+    const result1 = await pool.query(query1,[data.room]);
+    console.log(data.room,result1.rows);
+    io.to(data.room).emit("receive_message" , result1.rows);
   });
 });
 
