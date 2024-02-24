@@ -257,8 +257,22 @@ create table gl_desert(
  "time_update" timestamp default current_timestamp not null 
 );
 create table gl_product(
-"id" SERIAL PRIMARY KEY,
+ "id" SERIAL PRIMARY KEY,
  "food_ca_id" integer not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+);
+create table gl_otzif(
+ "id" SERIAL PRIMARY KEY,
+ "image" text not null,
+ "fullname" varchar(50) not null,
+ "servis" varchar(50) not null,
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null 
+);
+create table gl_users(
+ "id" SERIAL PRIMARY KEY,
+ "user_ca_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
 );
