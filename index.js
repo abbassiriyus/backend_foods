@@ -108,7 +108,7 @@ res.status(200).send(data)
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://foods-nextjs-one.vercel.app/",
     methods: ["GET", "POST"],
   },
 });

@@ -28,7 +28,7 @@ router.post('/foods', async (req, res) => {
     } = req.body;
 var image=upload_image(req)
     const query = `INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, description, dastafka_us, carbs, packages, price, image)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,current_timestamp, current_timestamp)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                    RETURNING *`;
 
     const values = [
