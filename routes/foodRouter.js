@@ -24,11 +24,11 @@ router.post('/foods', async (req, res) => {
       carbs,
       packages,
       price,
-      image
+     
     } = req.body;
-
+var image=upload_image(req)
     const query = `INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, description, dastafka_us, carbs, packages, price, image)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, current_timestamp, current_timestamp)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,current_timestamp, current_timestamp)
                    RETURNING *`;
 
     const values = [
@@ -55,7 +55,7 @@ router.post('/foods', async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating food:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
   router.get('/foods', async (req, res) => {

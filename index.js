@@ -113,7 +113,7 @@ const io = new Server(server, {
   },
 });
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
     socket.join(data);
@@ -123,7 +123,7 @@ io.on("connection", (socket) => {
     console.log(data);
     const query = `INSERT INTO messages (message,user_id,room_id) VALUES ($1,$2,$3) RETURNING *`;
     const values = [data.message,data.chat , data.room];
-    const result = await pool.query(query, values);
+    await pool.query(query, values);
     const query1 ='SELECT * FROM messages WHERE room_id=$1;'; 
     const result1 = await pool.query(query1,[data.room]);
     const query3 = 'UPDATE users SET online = current_timestamp WHERE id = $1 RETURNING *';

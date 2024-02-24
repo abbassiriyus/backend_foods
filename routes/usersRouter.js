@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
     // Save the user data to the database
     const result = await pool.query(query, values);
-    res.status(201).json({ data: result.rows[0], verificationCode, token });
+    res.status(201).json({ data: result.rows, verificationCode, token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -235,7 +235,7 @@ router.post('/verify/check', async (req, res) => {
     const values1 = [phone];
     const result1 = await pool.query(query1, values1);
     if(result1.rows.length>0){
-      res.json({ valid: true, token,user:result1.rows });
+      res.json({ valid: true, token,user:result1.rows});
     }else{
       res.json({ valid: true, token });
     }
