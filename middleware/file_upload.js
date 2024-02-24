@@ -42,7 +42,14 @@ if(file_tit.includes("local_image")){
 }
 
 var put_image=(file_name,req)=>{
-  var file_tit=file_name.slice(file_name.lastIndexOf('/'))
+  console.log(file_name);
+  if(file_name){
+     var file_tit=file_name.slice(file_name.lastIndexOf('/'))
+  }else{
+    var file_tit="qw"
+  }
+ 
+
 if(file_tit.includes("local_image")){
  fs.unlink(`${__dirname}/../uploads/${file_tit}`,()=>{}) }
   var send_image_link=""

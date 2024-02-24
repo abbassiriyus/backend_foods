@@ -25,7 +25,7 @@ router.get('/ishyonalishi/:id', async (req, res) => {
   
     const result = await db.query(query, values);
     if (result.rows.length === 0) {
-      res.status(404).json({ message: 'Ma\'lumot topilmadi' });
+      res.status(404).json({ message: 'Malumot topilmadi' });
     } else {
       res.json(result.rows[0]);
     }
