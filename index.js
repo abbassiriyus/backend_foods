@@ -126,7 +126,9 @@ io.on("connection", (socket) => {
     const result = await pool.query(query, values);
     const query1 ='SELECT * FROM messages WHERE room_id=$1;'; 
     const result1 = await pool.query(query1,[data.room]);
-    console.log(data.room,result1.rows);
+    const query3 = 'UPDATE users SET online = current_timestamp WHERE id = $1 RETURNING *';
+    const values3 = [data.chat];
+    await pool.query(query3, values3);
     socket.emit("receive_message" , result1.rows);
   });
 });
