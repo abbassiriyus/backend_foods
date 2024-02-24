@@ -127,7 +127,7 @@ io.on("connection", (socket) => {
     const query1 ='SELECT * FROM messages WHERE room_id=$1;'; 
     const result1 = await pool.query(query1,[data.room]);
     console.log(data.room,result1.rows);
-    io.to(data.room).emit("receive_message" , result1.rows);
+    socket.emit("receive_message" , result1.rows);
   });
 });
 
