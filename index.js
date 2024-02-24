@@ -130,7 +130,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(4004, () => {
+server.listen(4003, () => {
   console.log("SERVER IS RUNNING");
 });
 
