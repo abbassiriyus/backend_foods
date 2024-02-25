@@ -134,9 +134,8 @@ router.get('/getpovar/:id', async (req, res) => {
     const category = await pool.query(query5);
     const query65 = 'SELECT * FROM users';
     const users = await pool.query(query65);
-oneuser.rows[0].mark=5
-oneuser.rows[0].mark_org=0
-
+    oneuser.rows[0].mark=5
+    oneuser.rows[0].mark_org=0
 for (let i = 0; i < mark.rows.length; i++) {
 for (let j = 0; j < users.rows.length; j++) {
 if(mark.rows[i].user_id==users.rows[j].id){
@@ -151,31 +150,24 @@ if(mark.rows[i].user_id==users.rows[j].id){
 
 
 }}
-
-
-
 for (let i = 0; i < mark.rows.length; i++) {
   oneuser.rows[0].mark=(oneuser.rows[0].mark+mark.rows[i].mark)/2
 oneuser.rows[0].mark_org++
 }
-
-    if(pover.rows.length==0){
+if(pover.rows.length==0){
 oneuser.rows[0].pover=false
 }else{
   oneuser.rows[0].pover=pover.rows[0]
 }
   for (let i = 0; i < cateuser.rows.length; i++) {
 for (let j = 0; j < category.rows.length; j++) {
-if(cateuser.rows[i].category_id==category.rows[j].id){
-  cateuser.rows[i].title==category.rows[j].title
+  console.log(cateuser.rows[i].category_id,category.rows[j].id);
+if(cateuser.rows[i].category_id===category.rows[j].id){ 
+  cateuser.rows[i].title=category.rows[j].title
 }
 }}
-
 console.log(cateuser.rows);
-console.log(oneuser.rows[0]);
-var sencategory=(cateuser.rows).filter(item=>item.user_id==oneuser.rows[0].id)
-console.log((sencategory));
-res.status(200).send({ user:oneuser.rows[0] , category:sencategory ,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
+res.status(200).send({ user:oneuser.rows[0] , category:cateuser.rows,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
 
 }
 

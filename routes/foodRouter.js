@@ -169,7 +169,7 @@ res.status(200).json({food:one_food,user:food_user,comment:result3.rows,dr_food:
   });
   
   // Update a foods record by ID
-  router.put('/foods/:id', async (req, res) => {
+router.put('/foods/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const {
@@ -190,7 +190,12 @@ res.status(200).json({food:one_food,user:food_user,comment:result3.rows,dr_food:
       } = req.body;
       const query2 = 'SELECT * FROM foods WHERE id = $1';
       const result2 = await pool.query(query2, [id]);
-      var image=put_image(result2.rows[0].image,req)
+      if((req.files && req.files.image) || req.body.image){
+ var image=put_image(result2.rows[0].image,req)
+      }else{
+var image=result2.rows[0].image
+      }
+     
       const query =
         'UPDATE foods SET user_povar_id = $1, category_id = $2, foods_name = $3, portion = $4, weight = $5, preparation_time = $6, storage_condition = $7, calorie = $8, proteins = $9, oils = $10, carbs = $11, packages = $12, price = $13, image = $14, time_update = current_timestamp WHERE id = $15 RETURNING *';
       const values = [
