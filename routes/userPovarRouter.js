@@ -166,17 +166,8 @@ if(cateuser.rows[i].category_id===category.rows[j].id){
   cateuser.rows[i].title=category.rows[j].title
 }
 }}
-console.log(cateuser.rows);
 res.status(200).send({ user:oneuser.rows[0] , category:cateuser.rows,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
-
 }
-
-    
-  
-
-
-
-
  } catch (error) {
   console.log(error);
     res.status(500).json({ error: error.message });
