@@ -35,6 +35,8 @@ const glProductRouter=require('./routes/glProductRouter.js')
 const adminRouter=require('./routes/adminRouter.js')
 const glOtzif=require("./routes/glOtzif.js")
 const glUsersRouter=require("./routes/glUsersRouter.js")
+const karzinkaRouter=require("./routes/karzinkaRouter.js")
+
 
 
 
@@ -70,6 +72,7 @@ app.use(cors({origin: '*'}))
 
 app.use('/admin',adminRouter)
 app.use('/api',glUsersRouter)
+app.use('/api',karzinkaRouter)
 app.use('/api',glOtzif)
 app.use('/api',glDesertRouter)
 app.use('/api',userCategoryRouter)

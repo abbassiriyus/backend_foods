@@ -277,6 +277,16 @@ create table gl_users(
  "time_update" timestamp default current_timestamp not null 
 );
 
+create table karzinka(
+  "id" SERIAL PRIMARY KEY,
+ "user_ca_id" integer not null,
+ "food_id" integer not null,
+ "count" integer not null, 
+ UNIQUE(user_ca_id,food_id),
+ "time_create" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null  
+);
+
 INSERT INTO users (password, email, phone, name, address, city, country, postal_code, about_me, username, lastname, image)
 VALUES ('12345678', '12345678', '12345678', 'abbas1', 'tashkent', 'yashnobod', 'uzbekistan', '1212', 'men juda kop vaqt dasturlash bil;an shugullandim ovqatlarni esa qizigi yoq', 'salimov', 'avazjon o`g`li', 'https://www.texnoman.uz/uploads/blogs/347bc522c3567494f296429c72c8c55a.jpg');
 INSERT INTO foods (user_povar_id, category_id, food_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image)
