@@ -267,6 +267,7 @@ create table gl_otzif(
  "image" text not null,
  "fullname" varchar(50) not null,
  "servis" varchar(50) not null,
+ "deskription" text not null.
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
 );

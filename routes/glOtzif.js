@@ -5,14 +5,14 @@ const pool= require('../db.js');
 
 // CREATE - POST so'rovi
 router.post('/gl_otzif', (req, res) => {
-  const { image, fullname, servis } = req.body;
+  const { image, fullname, servis,deskription } = req.body;
   
-  const query = 'INSERT INTO gl_otzif (image, fullname, servis) VALUES ($1, $2, $3) RETURNING *';
-  const values = [image, fullname, servis];
+  const query = 'INSERT INTO gl_otzif (image, fullname, servis,deskription) VALUES ($1, $2, $3,$4) RETURNING *';
+  const values = [image, fullname, servis,deskription];
 
   pool.query(query, values, (err, result) => {
     if (err) {
-      console.error('Ma\'lumotni qo\'shishda xatolik yuz berdi:', err);
+      console.error('Malumotni qoshishda xatolik yuz berdi:', err);
       res.status(500).send('Serverda xatolik yuz berdi');
     } else {
       res.status(201).json(result.rows[0]);
@@ -26,7 +26,7 @@ router.get('/gl_otzif', (req, res) => {
 
   pool.query(query, (err, result) => {
     if (err) {
-      console.error('Ma\'lumotlarni o\'qishda xatolik yuz berdi:', err);
+      console.error('Malumotlarni oqishda xatolik yuz berdi:', err);
       res.status(500).send('Serverda xatolik yuz berdi');
     } else {
       res.status(200).json(result.rows);
@@ -58,10 +58,10 @@ router.get('/gl_otzif/:id', (req, res) => {
 // UPDATE - PUT so'rovi
 router.put('/gl_otzif/:id', (req, res) => {
   const id = req.params.id;
-  const { image, fullname, servis } = req.body;
+  const { image, fullname, servis,deskription } = req.body;
 
-  const query = 'UPDATE gl_otzif SET image = $1, fullname = $2, servis = $3, time_update = current_timestamp WHERE id = $4 RETURNING *';
-  const values = [image, fullname, servis, id];
+  const query = 'UPDATE gl_otzif SET image = $1, fullname = $2, servis = $3,deskription=$4 time_update = current_timestamp WHERE id = $5 RETURNING *';
+  const values = [image, fullname, servis,deskription, id];
 
   pool.query(query, values, (err, result) => {
     if (err) {
