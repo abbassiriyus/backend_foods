@@ -39,7 +39,7 @@ create table ish_yonalishi(
   "title" text not null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
-)
+);
 
 -- headerdagi cariuseli tabelisi
 create table user_prog(
@@ -153,7 +153,7 @@ create table  necessary(
  "title" text not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
-)
+);
 create table food_seller(
  "id" serial primary key,
  "creator" integer not null,
@@ -225,25 +225,25 @@ create table siz_uchun(
  "food_ca_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
-)
+);
 create table oshpazdan_taom(
    "id" SERIAL PRIMARY KEY,
  "food_ca_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
-)
+);
 create table shirinliklar(
    "id" SERIAL PRIMARY KEY,
  "food_ca_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
-)
+);
 create table soglom(
    "id" SERIAL PRIMARY KEY,
  "food_ca_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
-)
+);
 create table gl_foods(
     "id" SERIAL PRIMARY KEY,
  "food_ca_id" integer not null,
@@ -267,7 +267,7 @@ create table gl_otzif(
  "image" text not null,
  "fullname" varchar(50) not null,
  "servis" varchar(50) not null,
- "deskription" text not null.
+ "deskription" text not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null 
 );
@@ -290,8 +290,8 @@ create table karzinka(
 
 INSERT INTO users (password, email, phone, name, address, city, country, postal_code, about_me, username, lastname, image)
 VALUES ('12345678', '12345678', '12345678', 'abbas1', 'tashkent', 'yashnobod', 'uzbekistan', '1212', 'men juda kop vaqt dasturlash bil;an shugullandim ovqatlarni esa qizigi yoq', 'salimov', 'avazjon o`g`li', 'https://www.texnoman.uz/uploads/blogs/347bc522c3567494f296429c72c8c55a.jpg');
-INSERT INTO foods (user_povar_id, category_id, food_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image)
-VALUES (1, 1, 'food_name_value', 'portion_value', 'weight_value', 'preparation_time_value', 'storage_condition_value', 'calorie_value', 'proteins_value', 'oils_value', 'carbs_value', 'packages_value', 123, 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png');
+INSERT INTO foods (user_povar_id, category_id, foods_name, portion, weight, preparation_time, storage_condition, calorie, proteins, oils, carbs, packages, price, image,description,dastafka_us)
+VALUES (1, 1, 'food_name_value', 'portion_value', 'weight_value', 24, 'storage_condition_value', 'calorie_value', 'proteins_value', 'oils_value', 'carbs_value', 'packages_value', 123, 'https://s3.timeweb.com/3c054d59-37319911-7058-4007-b6f4-e93899e36aed/af944830ed2445956672f8103d2f0a78e8b3b185/af944830ed2445956672f8103d2f0a78e8b3b185-wc800.png','Идея сервиса очень крутая! Я&nbsp;работаю шеф-поваром, и&nbsp;по&nbsp;роду деятельности часто сталкиваюсь с&nbsp;необычными продуктами и&nbsp;интересными блюдами! По&nbsp;сути, сервис даёт каждому возможность создать «ресторан у&nbsp;себя дома», не&nbsp;прибегая к&nbsp;дополнительным вложениям.','у&nbsp;себя дома», не&nbsp;прибегая к&nbsp;дополнительным вложениям.');
 UPDATE foods
 SET food_name = 'food_name_value',
     portion = 'portion_value',
