@@ -5,9 +5,9 @@ const db = require('../db'); // PostgreSQL bog'lanish obyekti
 // CREATE - Yaratish
 router.post('/foodmark', async (req, res) => {
   try {
-    const { user_id, description, mark } = req.body;
-    const query = 'INSERT INTO food_mark (user_id, description, mark) VALUES ($1, $2, $3) RETURNING *';
-    const values = [user_id, description, mark];
+    const { user_id, description, mark,my_id } = req.body;
+    const query = 'INSERT INTO food_mark (user_id, description, mark,my_id) VALUES ($1, $2, $3, $4) RETURNING *';
+    const values = [user_id, description, mark,my_id];
   
     const result = await db.query(query, values);
     res.json(result.rows[0]);
@@ -18,8 +18,6 @@ router.post('/foodmark', async (req, res) => {
 router.get('/foodmark', async (req, res) => {
   try {
     const query = 'SELECT * FROM food_mark';
-  
-  
     const result = await db.query(query);
     if (result.rows.length === 0) {
       res.status(404).json({ message: 'Ma\'lumot topilmadi' });
@@ -53,9 +51,9 @@ router.get('/foodmark/:id', async (req, res) => {
 router.put('/foodmark/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const { user_id, description, mark } = req.body;
-    const query = 'UPDATE food_mark SET user_id = $1, description = $2, mark = $3, time_update = current_timestamp WHERE id = $4 RETURNING *';
-    const values = [user_id, description, mark, id];
+    const { user_id, description, mark,my_id } = req.body;
+    const query = 'UPDATE food_mark SET user_id = $1, description = $2, mark = $3, my_id=$4, time_update = current_timestamp WHERE id = $5 RETURNING *';
+    const values = [user_id, description, mark,my_id, id];
   
     const result = await db.query(query, values);
     if (result.rows.length === 0) {

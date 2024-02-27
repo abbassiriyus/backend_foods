@@ -78,10 +78,7 @@ for (let j = 0; j < result6.rows.length; j++) {
 if(result6.rows[j].user_id===result.rows[i].user_id){
   result.rows[i].category.push(result6.rows[j])
 
-}
-  
-}    
-    }
+}}}
 
 
 for (let i = 0; i < result.rows.length; i++) {
@@ -138,20 +135,15 @@ router.get('/getpovar/:id', async (req, res) => {
     oneuser.rows[0].mark_org=0
 for (let i = 0; i < mark.rows.length; i++) {
 for (let j = 0; j < users.rows.length; j++) {
-if(mark.rows[i].user_id==users.rows[j].id){
+if(mark.rows[i].my_id==users.rows[j].id){
   mark.rows[i].image=users.rows[j].image
   mark.rows[i].name=users.rows[j].name
   mark.rows[i].username=users.rows[j].username
   mark.rows[i].lastname=users.rows[j].lastname
-
-
-
 }
-
-
 }}
 for (let i = 0; i < mark.rows.length; i++) {
-  oneuser.rows[0].mark=(oneuser.rows[0].mark+mark.rows[i].mark)/2
+oneuser.rows[0].mark=(oneuser.rows[0].mark+mark.rows[i].mark)/2
 oneuser.rows[0].mark_org++
 }
 if(pover.rows.length==0){

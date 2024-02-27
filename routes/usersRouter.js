@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
     // Generate a verification code
     const verificationCode = generateVerificationCode();
     // Generate a token
-    const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ email }, 'SECRET_KEY', { expiresIn: '1h' });
     // Save the user data to the database
     const result = await pool.query(query, values);
     res.status(201).json({ data: result.rows, verificationCode, token });
@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Geçersiz telefon numarası veya şifre.' });
   }
   const payload = { phone };
-  const token = jwt.sign(payload, process.env.SECRET_KEY);
+  const token = jwt.sign(payload, 'SECRET_KEY');
   if(result.rows[0].password===password){
   res.json({ token,user:result.rows });
 }else{

@@ -21,18 +21,21 @@ router.post('/gl_users', (req, res) => {
 });
 
 // READ - GET işlemi
-router.get('/gl_users/:id', (req, res) => {
-  const id = req.params.id;
-
-  const query = 'SELECT * FROM gl_users WHERE id = $1';
-  const values = [id];
-
-  pool.query(query, values, (err, result) => {
+router.get('/gl_users/', (req, res) => {
+  const query = 'SELECT * FROM gl_users';
+  const query2= 'SELECT * FROM users';
+  pool.query(query, (err, result) => {
     if (err) {
       console.error('Veritabanından okurken hata oluştu:', err);
       res.status(500).send('Sunucuda bir hata oluştu');
     } else {
       if (result.rows.length > 0) {
+pool.query(query,(err2,result2)=>{
+
+
+
+})
+
         res.status(200).json(result.rows[0]);
       } else {
         res.status(404).send('Veri bulunamadı');
