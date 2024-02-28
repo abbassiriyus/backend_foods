@@ -6,11 +6,11 @@ const router = express.Router();
 // Create a message record
 router.post('/messages', async (req, res) => {
     try {
-      const { message } = req.body;
+      const { message,user_id,room_id } = req.body;
       const query = `
-        INSERT INTO messages (message) VALUES ($1) RETURNING *
+        INSERT INTO messages (message,user_id,room_id) VALUES ($1,$2,$3) RETURNING *
       `;
-      const values = [message];
+      const values = [message,user_id,room_id];
       const result = await pool.query(query, values);
       res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -50,15 +50,17 @@ router.post('/messages', async (req, res) => {
   router.put('/messages/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { message } = req.body;
+      const { message,user_id,room_id } = req.body;
       const query = `
         UPDATE messages SET
           message = $1,
+          room_id=$2,
+          user_id=$3,
           time_update = current_timestamp
-        WHERE id = $2
+        WHERE id = $4
         RETURNING *
       `;
-      const values = [message, id];
+      const values = [message,room_id,user_id,id];
       const result = await pool.query(query, values);
       if (result.rows.length === 0) {
         res.status(404).json({ error: 'Record not found' });

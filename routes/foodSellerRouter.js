@@ -3,6 +3,7 @@ const pool = require('../db'); // Assuming you have a 'db.js' file setting up yo
 const router = express.Router();
 
 router.post('/food_seller', async (req, res) => {
+  console.log(req.body);
     try {
       const {
         creator,
