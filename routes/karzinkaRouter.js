@@ -26,6 +26,8 @@ router.get('/karzinka/:userid', async (req, res) => {
        for (let j = 0; j < result3.rows.length; j++) {
      if(result.rows[i].user_id==result3.rows[j].id){
     result.rows[i].name=result3.rows[j].name
+    result.rows[i].user_image=result3.rows[j].image
+    result.rows[i].phone=result3.rows[j].phone
      }
        }
       }
@@ -33,6 +35,7 @@ router.get('/karzinka/:userid', async (req, res) => {
         for (let j = 0; j < result4.rows.length; j++) {
       if(result.rows[i].user_id==result4.rows[j].user_id){
      result.rows[i].ish_yonalishi=result4.rows[j].ish_yonalishi
+     result.rows[i].place=result4.rows[j].place
       }
         }
        }

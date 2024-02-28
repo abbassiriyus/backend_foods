@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
   try {
     const { password, email, phone, address } = req.body;
     var image=""
-    if(req.file.image || req.file.image ){
+    if(req.file && req.file.image || req.body.image ){
      image = upload_image(req);
     }
     const query = 'INSERT INTO users (password, email, phone, address, image) VALUES ($1, $2, $3, $4, $5) RETURNING *';
