@@ -21,27 +21,51 @@ router.post('/gl_users', (req, res) => {
 });
 
 // READ - GET işlemi
-router.get('/gl_users/', (req, res) => {
-  const query = 'SELECT * FROM gl_users';
-  const query2= 'SELECT * FROM users';
-  pool.query(query, (err, result) => {
-    if (err) {
-      console.error('Veritabanından okurken hata oluştu:', err);
-      res.status(500).send('Sunucuda bir hata oluştu');
-    } else {
-      if (result.rows.length > 0) {
-pool.query(query,(err2,result2)=>{
+router.get('/gl_users/', async (req, res) => {
+ try{
+  const query2 = 'SELECT * FROM gl_users';
+  const result2 = await pool.query(query2);
+   console.log(result2.rows);
+  const query3 = 'SELECT * FROM  users';
+  const result3 = await pool.query(query3);
+   console.log(result3.rows);
+  const query4 = 'SELECT * FROM  category';
+  const result4 = await pool.query(query4);
+  const query5 = 'SELECT * FROM  user_category';
+  const result5 = await pool.query(query5);
+
+  for (let i = 0; i < result5.rows.length; i++) {
+  for (let j = 0; j < result4.rows.length; j++) {
+  if(result5.rows[i].category_id==result4.rows[j].id){
+    result5.rows[i].title==result4.rows[j].title
+  }}}
 
 
+for (let i = 0; i < result3.rows.length; i++) {
+  result3.rows[i].category=[]
+  for (let j = 0; j < result5.rows.length; j++) {
+ if(result3.rows[i].id===result5.rows[j].user_id){
+  result3.rows[i].category.push(result5.rows[j])
+ }}}
 
-})
 
-        res.status(200).json(result.rows[0]);
-      } else {
-        res.status(404).send('Veri bulunamadı');
-      }
-    }
-  });
+var senddate=[]
+for (let i = 0; i < result3.rows.length; i++) {
+  result3.rows[i].push=false
+  for (let j = 0; j < result2.rows.length; j++) {
+  if(result3.rows[i].id==result2.rows[j].user_ca_id){
+    result3.rows[i].push=true 
+  }
+}
+if(result3.rows[i].push){
+  senddate.push(result3.rows[i])
+}
+}
+
+res.status(200).send(senddate)
+ }catch(er){
+res.status(500).send(er)
+ }
 });
 
 // UPDATE - PUT işlemi
