@@ -130,6 +130,27 @@ router.put('/users/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// Update a user by ID
+router.put('/users_pover_put/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, name } = req.body;
+    const query2 = 'SELECT * FROM users WHERE id = $1';
+    const result2 = await pool.query(query2, [id]);
+    var image=put_image(result2.rows[0].image,req)
+    const query = 'UPDATE users SET email = $1, name = $2 , image = $3 WHERE id = $4 RETURNING *';
+    const values = [email, name, image, id];
+    const result = await pool.query(query, values);
+    if (result.rows.length===0){
+      res.status(404).json({ error: 'User not found' });
+    } else {
+      res.status(200).json(result.rows);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Update a user by ID
 router.patch('/users/:id', async (req, res) => {

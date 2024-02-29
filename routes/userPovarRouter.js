@@ -9,8 +9,8 @@ router.post('/user_povar', async (req, res) => {
   try {
     const { user_id, deskription,ish_yonalishi, expertise, place, is_prepared } = req.body;
     const query =
-      'INSERT INTO user_povar (user_id, deskription, expertise, place, is_prepared,image,ish_yonalishi) VALUES ($1, $2, $3, $4, $5,$6,$7) RETURNING *';
-    const values = [user_id, deskription, expertise, place, is_prepared,image,ish_yonalishi];
+      'INSERT INTO user_povar (user_id, deskription, expertise, place, is_prepared,ish_yonalishi) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *';
+    const values = [user_id, deskription, expertise, place, is_prepared,ish_yonalishi];
     const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
