@@ -42,7 +42,6 @@ if(file_tit.includes("local_image")){
 }
 
 var put_image=(file_name,req)=>{
-  console.log(file_name);
   if(file_name){
      var file_tit=file_name.slice(file_name.lastIndexOf('/'))
   }else{
@@ -60,7 +59,12 @@ if(file_tit.includes("local_image")){
     file.mv(`${__dirname}/../uploads/${name_file+file_tit}`)
     send_image_link=req.protocol+"://"+req.hostname+"/"+name_file+file_tit
     }else{
-     send_image_link=req.body.image
+      if(req.body.image){
+        send_image_link=req.body.image
+      }else{
+        send_image_link="no image"
+      }
+     
     }
   return send_image_link
 
