@@ -34,10 +34,14 @@ router.get('/gl_users/', async (req, res) => {
   const query5 = 'SELECT * FROM  user_category';
   const result5 = await pool.query(query5);
 
+  const query6 = 'SELECT * FROM  food_mark';
+  const result6 = await pool.query(query6);
+  const query7 = 'SELECT * FROM  user_povar';
+  const result7 = await pool.query(query7);
   for (let i = 0; i < result5.rows.length; i++) {
   for (let j = 0; j < result4.rows.length; j++) {
   if(result5.rows[i].category_id==result4.rows[j].id){
-    result5.rows[i].title==result4.rows[j].title
+    result5.rows[i].title=result4.rows[j].title
   }}}
 
 
@@ -48,7 +52,15 @@ for (let i = 0; i < result3.rows.length; i++) {
   result3.rows[i].category.push(result5.rows[j])
  }}}
 
-
+for (let i = 0; i < result3.rows.length; i++) {
+  result3.rows[i].mark=5
+  result3.rows[i].mark_org=0
+for (let j = 0; j <result6.rows.length; j++) {
+if(result6.rows[j].user_id==result3.rows[i].id){
+  result3.rows[i].mark=(result3.rows[i].mark+result3.rows[i].mark)/2
+  result3.rows[i].mark_org++
+}
+}}
 var senddate=[]
 for (let i = 0; i < result3.rows.length; i++) {
   result3.rows[i].push=false
@@ -61,6 +73,13 @@ if(result3.rows[i].push){
   senddate.push(result3.rows[i])
 }
 }
+
+for (let i = 0; i < senddate.length; i++) {
+for (let j = 0; j < result7.rows.length; j++) {
+if(senddate[i].id===result7.rows[j].user_id){
+senddate[i].ish_yonalishi=result7.rows[j].ish_yonalishi
+}}}
+
 
 res.status(200).send(senddate)
  }catch(er){

@@ -170,6 +170,7 @@ create table food_seller(
  "convex" integer not null,
  "date" date not null,
  "time" text not null,
+ "status"  integer default 1 not null,
  "food_id" integer not null,
  "time_create" timestamp default current_timestamp not null,
  "time_update" timestamp default current_timestamp not null  

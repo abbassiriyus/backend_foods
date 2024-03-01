@@ -79,13 +79,46 @@ router.post('/food_seller', async (req, res) => {
   router.get('/food_seller/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const query = 'SELECT * FROM food_seller WHERE id = $1';
-      const result = await pool.query(query, [id]);
-      if (result.rows.length === 0) {
-        res.status(404).json({ error: 'Record not found' });
-      } else {
-        res.status(200).json(result.rows[0]);
-      }
+      const query = 'SELECT * FROM food_seller';
+      const result = await pool.query(query);
+      const query1 = 'SELECT * FROM foods';
+      const result1 = await pool.query(query1);
+      const query2 = 'SELECT * FROM users';
+      const result2 = await pool.query(query2);
+
+for (let i = 0; i < result.rows.length; i++) {
+for (let j = 0; j < result2.rows.length; j++) {
+if(result.rows[i].creator==result2.rows[j].id){
+  result.rows[i].creator=result2.rows[j]
+}
+}}
+
+for (let i = 0; i < result.rows.length; i++) {
+  for (let j = 0; j < result1.rows.length; j++) {
+    if(result.rows[i].food_id==result1.rows[j].id){
+      result.rows[i].food=result1.rows[j]
+    }
+  }}
+// console.log(result.rows);
+for (let i = 0; i < result.rows.length; i++) {
+ for (let j = 0; j < result2.rows.length; j++) {
+ 
+  if( result.rows[i].food && result.rows[i].food.user_povar_id==result2.rows[j].id){
+    result.rows[i].pover=result2.rows[j]
+  }
+ }}
+
+var ipover=[]
+var izakaz=[]
+for (let i = 0; i < result.rows.length; i++) {
+ if(result.rows[i].food && result.rows[i].creator.id==id){
+  izakaz.push(result.rows[i])
+ }
+ if(result.rows[i].food && result.rows[i].food.user_povar_id==id){
+  ipover.push(result.rows[i])
+ } 
+  } 
+        res.status(200).json({pover:ipover,zakaz:izakaz});
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message  });
