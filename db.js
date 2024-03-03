@@ -8,11 +8,10 @@ const { Pool, Client } = require("pg")
 //     port: 5619
 // })
 const pool = new Client({
-    user: "31.129.97.80",
+    user: "trendokz_foods",
     host: "localhost",
     database: "trendokz_foods",
-    password: "!Q2w3e$R6688!!",
-    port: 5619
+    password: "XhAkPq%1",
 })
 // const connectionString = 'postgres://default:iXIu4pgzZj3l@ep-muddy-hat-a4w2oo3c.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require';
 
