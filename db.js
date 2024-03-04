@@ -1,11 +1,12 @@
 // const { Pool, Client } = require("pg")
 const mysql = require('mysql');
 
-    const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '!Q2w3e$R6688!!',
-    database: 'trendokz_foods'
+ const connection = mysql.createConnection({
+    host: 'trendokz.beget.tech',
+    user: 'trendokz_foods',
+    password: '!Q2w3e$R6688!',
+    database: 'trendokz_foods',
+    connectTimeout: 30000,
     });
 // const pool = new Client({
 //     user: "postgres",
@@ -27,6 +28,7 @@ const mysql = require('mysql');
 // });
 connection.connect(err => {
     if(err) {
+        console.log(err);
         console.log("Connect Error");
     } else {
         console.log("Connect To PostgreSql");
