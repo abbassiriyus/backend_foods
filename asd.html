@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+#calendar {
+  width: 300px;
+  border: 1px solid #ccc;
+}
+
+#calendar .week {
+  display: flex;
+}
+
+#calendar .day {
+  flex: 1;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+#calendar .selected {
+  background-color: #99ccff;
+}
+</style>
+<body>
+    <div id="calendar"></div>
+
+    <script>
+var calendar = document.getElementById("calendar");
+var startDate = new Date(); // Bugünkü tarih
+startDate.setDate(1); // Ayın ilk gününe ayarlıyoruz
+var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0); // Ayın son gününe ayarlıyoruz
+
+while (startDate <= endDate) {
+  var weekDiv = document.createElement("div");
+  weekDiv.className = "week";
+
+  for (var i = 0; i < 7; i++) {
+    var dayDiv = document.createElement("div");
+    dayDiv.className = "day";
+    dayDiv.textContent = startDate.getDate();
+    dayDiv.addEventListener("click", function() {
+      this.classList.toggle("selected");
+    });
+
+    weekDiv.appendChild(dayDiv);
+    startDate.setDate(startDate.getDate() + 1);
+  }
+
+  calendar.appendChild(weekDiv);
+}
+    </script>
+</body>
+</html>

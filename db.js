@@ -4,7 +4,7 @@ const mysql = require('mysql');
  const connection = mysql.createConnection({
     host: 'trendokz.beget.tech',
     user: 'trendokz_foods',
-    password: '!Q2w3e$R6688!',
+    password: '!Q2w3e$R6688!!',
     database: 'trendokz_foods',
     connectTimeout: 30000,
     });
