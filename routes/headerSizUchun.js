@@ -65,13 +65,8 @@ router.put('/siz_uchun/:id', async (req, res) => {
     const { food_ca_id } = req.body;
     const query = 'UPDATE siz_uchun SET food_ca_id = $1, time_update = current_timestamp WHERE id = $2 RETURNING *';
     const values = [food_ca_id, id];
-
     const result = await db.query(query, values);
-    if (result.rows.length === 0) {
-      res.status(404).json({ message: 'Malumot topilmadi' });
-    } else {
       res.json(result.rows[0]);
-    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -85,7 +80,7 @@ router.delete('/siz_uchun/:id', async (req, res) => {
     const values = [id];
 
     await db.query(query, values);
-    res.json({ message: 'Malumot o\'chirildi' });
+    res.json({ message: 'Malumot ochirildi' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

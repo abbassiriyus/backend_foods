@@ -8,6 +8,12 @@ const mysql = require('mysql');
     database: 'trendokz_foods',
     connectTimeout: 30000,
     });
+    // const pool = new Client({
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: '12345678',
+    //     database: 'postgres',
+    // })
 // const pool = new Client({
 //     user: "postgres",
 //     host: "containers-us-west-143.railway.app",

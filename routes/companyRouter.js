@@ -11,14 +11,14 @@ router.post('/company', async (req, res) => {
         app_store,
         playmarket,
         telegram,
-        vkontakt,
+        vkantakt,
         okru,
         whatsapp,
         email,
       } = req.body;
       var image = upload_image(req);
       const query = `
-        INSERT INTO company (image, app_store, playmarket, telegram, vkontakt, okru, whatsapp, email)
+        INSERT INTO company (image, app_store, playmarket, telegram, vkantakt, okru, whatsapp, email)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
       `;
@@ -27,7 +27,7 @@ router.post('/company', async (req, res) => {
         app_store,
         playmarket,
         telegram,
-        vkontakt,
+        vkantakt,
         okru,
         whatsapp,
         email,
@@ -77,7 +77,7 @@ router.post('/company', async (req, res) => {
         app_store,
         playmarket,
         telegram,
-        vkontakt,
+        vkantakt,
         okru,
         whatsapp,
         email
@@ -92,7 +92,7 @@ router.post('/company', async (req, res) => {
           app_store = $2,
           playmarket = $3,
           telegram = $4,
-          vkontakt = $5,
+          vkantakt = $5,
           okru = $6,
           whatsapp = $7,
           email = $8,
@@ -105,7 +105,7 @@ router.post('/company', async (req, res) => {
         app_store,
         playmarket,
         telegram,
-        vkontakt,
+        vkantakt,
         okru,
         whatsapp,
         email,

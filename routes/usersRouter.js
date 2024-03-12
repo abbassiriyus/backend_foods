@@ -27,7 +27,28 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+javascript
 
+// CREATE - Yaratish
+router.post('/users', async (req, res) => {
+  try {
+    const { password, email, phone, name,  about_me, username, lastname } = req.body;
+    var image=""
+    if((req.files && req.files.image) || req.body.image ){
+     image = upload_image(req);
+    }
+    const query = `
+      INSERT INTO users (password, email, phone, name,  about_me, username, lastname, image)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *`;
+    const values = [password, email, phone, name,about_me, username, lastname, image];
+
+    const result = await pool.query(query, values);
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message});
+  }
+});
 router.post('/login', async (req, res) => {
   const { phone, password } = req.body;
   const query = 'SELECT * FROM users WHERE phone = $1';
