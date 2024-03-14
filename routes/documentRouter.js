@@ -1,6 +1,6 @@
 const express = require('express');
 const pool = require('../db'); // Assuming you have a 'db.js' file setting up your database
-const { upload_file, put_file } = require('../middleware/file_upload');
+const { upload_file, put_file, delete_file } = require('../middleware/file_upload');
 const router = express.Router();
 
 
