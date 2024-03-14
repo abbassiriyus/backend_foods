@@ -317,8 +317,8 @@ VALUES (5, 1, 'Pizza', '1 slice', '200g', '30 minutes', 'Refrigerated', '500 kca
 
 
 
-ALTER SEQUENCE food_seller_id_seq OWNED BY food_seller.id;
-GRANT USAGE, SELECT ON SEQUENCE food_seller_id_seq TO abbasuz1_foods;
+ALTER SEQUENCE user_povar_user_id_key OWNED BY user_povar.id;
+GRANT USAGE, SELECT ON SEQUENCE user_povar_user_id_key TO root;
 
 
 

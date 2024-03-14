@@ -4,6 +4,7 @@ const pool = require('../db'); // Assuming you have a 'db.js' file setting up yo
 const { upload_image, generateVerificationCode, put_image, delete_image } = require('../middleware/file_upload');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const { default: axios } = require('axios');
 
 // Create a new user
 router.post('/register', async (req, res) => {
@@ -27,7 +28,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-javascript
+
 
 // CREATE - Yaratish
 router.post('/users', async (req, res) => {
@@ -271,7 +272,7 @@ const headers = {
 const msgApi = "https://notify.eskiz.uz/api/message/sms/send";
 const sendMsg = {
             mobile_phone: phone,
-            message: code,
+            message: `edablizko.com  ваш код:${code}` ,
             from: "4546",
           };
           axios
