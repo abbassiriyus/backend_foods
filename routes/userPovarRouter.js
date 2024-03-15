@@ -101,7 +101,10 @@ for (let i = 0; i <result.rows.length; i++) {
         result.rows[i].foods.push(result2.rows[j])
       }
       }}
-    res.status(200).json(result.rows);
+      var a=result.rows.filter(item=>(item.name && item.foods.length))
+     
+
+    res.status(200).json(a);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message  });
@@ -158,6 +161,7 @@ if(cateuser.rows[i].category_id===category.rows[j].id){
   cateuser.rows[i].title=category.rows[j].title
 }
 }}
+
 res.status(200).send({ user:oneuser.rows[0] , category:cateuser.rows,commnet:mark.rows,kitchen:kitchen.rows, foods:foods.rows})
 }
  } catch (error) {

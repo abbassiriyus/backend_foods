@@ -4,73 +4,80 @@ const router = express.Router();
 const pool = require('../db.js');
 
 
+
+
 // Tüm karzinka öğelerini getirme
 router.get('/karzinka/:userid', async (req, res) => {
-    try {
-        var { userid }=req.params
-      const query = 'SELECT * FROM karzinka;';
-      const result = await pool.query(query);
-      const query2 = 'SELECT * FROM foods;';
-      const result2= await pool.query(query2);
-      const query3 = 'SELECT * FROM users;';
-      const result3= await pool.query(query3);
-      const query4 = 'SELECT * FROM user_povar;';
-      const result4= await pool.query(query4);
+  try {
+      var { userid }=req.params
+    const query = 'SELECT * FROM karzinka;';
+    const result = await pool.query(query);
+    const query2 = 'SELECT * FROM foods;';
+    const result2= await pool.query(query2);
+    const query3 = 'SELECT * FROM users;';
+    const result3= await pool.query(query3);
+    const query4 = 'SELECT * FROM user_povar;';
+    const result4= await pool.query(query4);
+  for (let i = 0; i < result.rows.length; i++) {
+   for (let j = 0; j < result2.rows.length; j++) {
+    if(result.rows[i].food_id==result2.rows[j].id){
+     result.rows[i].food=[result2.rows[j]]
+     result.rows[i].user_id=result2.rows[j].user_povar_id
+    }}}
     for (let i = 0; i < result.rows.length; i++) {
-     for (let j = 0; j < result2.rows.length; j++) {
-      if(result.rows[i].food_id==result2.rows[j].id){
-       result.rows[i].food=[result2.rows[j]]
-       result.rows[i].user_id=result2.rows[j].user_povar_id
-      }}}
-      for (let i = 0; i < result.rows.length; i++) {
-       for (let j = 0; j < result3.rows.length; j++) {
-     if(result.rows[i].user_id==result3.rows[j].id){
-    result.rows[i].name=result3.rows[j].name
-    result.rows[i].user_image=result3.rows[j].image
-    result.rows[i].phone=result3.rows[j].phone
+     for (let j = 0; j < result3.rows.length; j++) {
+   if(result.rows[i].user_id==result3.rows[j].id){
+  result.rows[i].name=result3.rows[j].name
+  result.rows[i].user_image=result3.rows[j].image
+  result.rows[i].phone=result3.rows[j].phone
+   }
      }
-       }
+    }
+    for (let i = 0; i < result.rows.length; i++) {
+      for (let j = 0; j < result4.rows.length; j++) {
+    if(result.rows[i].user_id==result4.rows[j].user_id){
+   result.rows[i].ish_yonalishi=result4.rows[j].ish_yonalishi
+   result.rows[i].place=result4.rows[j].place
+    }
       }
-      for (let i = 0; i < result.rows.length; i++) {
-        for (let j = 0; j < result4.rows.length; j++) {
-      if(result.rows[i].user_id==result4.rows[j].user_id){
-     result.rows[i].ish_yonalishi=result4.rows[j].ish_yonalishi
-     result.rows[i].place=result4.rows[j].place
-      }
-        }
-       }
+     }
 var send_data=result.rows.filter(item=>item.user_ca_id==userid)
 send_data.sort(function(a, b){
-    return new Date(b.time_create) - new Date(a.time_create);
+  return new Date(b.time_create) - new Date(a.time_create);
 });
 var filternew=[]
-
+var send_data=send_data.filter(item=>(item.food && item.name && item.food.length>0))
 for (let i = 0; i < send_data.length; i++) {
-    send_data[i].push=true 
-    send_data[i].food[0].count=send_data[i].count
-    send_data[i].food[0].shopid=send_data[i].id
+  send_data[i].push=true 
+ 
+  send_data[i].food[0].count=send_data[i].count
+  send_data[i].food[0].shopid=send_data[i].id
 
 for (let j = 0;j<filternew.length; j++) { 
- if(send_data[i].user_id==filternew[j].user_id){
-    (filternew[j].food).push(send_data[i].food[0])
-    send_data[i].push=false
- }
+if(send_data[i].user_id==filternew[j].user_id){
+  (filternew[j].food).push(send_data[i].food[0])
+  send_data[i].push=false
 }
 
- if (send_data[i].push) {
-    filternew.push(send_data[i])
- }
+}
+      
+if (send_data[i].push) {
+  filternew.push(send_data[i])
+}
 
 
 }
 
 
-      res.json({filternew,count:send_data.length});
-    } catch (error) {
-      console.error('Karzinka öğeleri alınamadı:', error);
-      res.status(500).json({ error:error.message});
-    }
-  });
+    res.json({filternew,count:send_data.length});
+  } catch (error) {
+    console.error('Karzinka öğeleri alınamadı:', error);
+    res.status(500).json({ error:error.message});
+  }
+});
+
+
+
 
 
 
