@@ -5,7 +5,7 @@ const { upload_image, generateVerificationCode, put_image, delete_image } = requ
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { default: axios } = require('axios');
-
+const nodemailer=require("nodemailer")
 // Create a new user
 router.post('/register', async (req, res) => {
   try {
@@ -234,28 +234,33 @@ if(result2.rows.length==0){
 const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
     const values = [phone, code];
     const result = await pool.query(query, values);
-    const headers = {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTA0ODY1OTcsImlhdCI6MTcwNzg5NDU5Nywicm9sZSI6InRlc3QiLCJzaWduIjoiMDRkZmYzNDA2NzJjNjdiZDBlZDI3MmU2N2I3ZTRlY2M2OTJmMzMwMjMyZmNlZTkyMDc1ODg3ZDA4NDZiODUyNSIsInN1YiI6IjY0MzcifQ.g1W-DPl2KnK4JAKkkblR9eXeYwu5vLcQtp1ajQkNShQ", // Замените на свой реальный токен доступа
-      "Content-Type": "application/json",
-      Accept: "application/json",
+ 
+  const transporter = nodemailer.createTransport({
+      pool: true,
+     service: "gmail",
+     auth: {
+        user: "uzdub.group@gmail.com",
+        pass: 'fbcgnvqfbmocflcm',
+     },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
+    },
+    });
+    const mailOptions = {
+      from: 'uzdub.group@gmail.com',
+      to: phone,
+      subject: 'Parolanızı alın',
+      text: `edablizko.com  ваш код: ${code}`,
     };
-    const msgApi = "https://notify.eskiz.uz/api/message/sms/send";
-    const sendMsg = {
-                mobile_phone: phone,
-                message: code,
-                from: "4546",
-              };
-              axios
-                .post(msgApi, sendMsg, { headers })
-                .then((response) => {
-                  console.log(response);
-                  return res.json({ message: "Ваш код отправлен на ваш номер" });
-                })
-                .catch((error) => {
-                  console.log(error);
-                  return res.json({ message: "Ошибка при отправке sms сообщения" });
-                });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.status(400).json(error)
+      } else {
+      res.status(200).json(info)
+      }
+    });
+
 }else{
   const query3 = `UPDATE verify SET code = $1,
   time_update = current_timestamp WHERE id = $2 RETURNING *`;
@@ -263,32 +268,33 @@ console.log(result2.rows[0]);
 const values3= [code, result2.rows[0].id];
 
 const result3 = await pool.query(query3, values3);
-const headers = {
-  Authorization:
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTA0ODY1OTcsImlhdCI6MTcwNzg5NDU5Nywicm9sZSI6InRlc3QiLCJzaWduIjoiMDRkZmYzNDA2NzJjNjdiZDBlZDI3MmU2N2I3ZTRlY2M2OTJmMzMwMjMyZmNlZTkyMDc1ODg3ZDA4NDZiODUyNSIsInN1YiI6IjY0MzcifQ.g1W-DPl2KnK4JAKkkblR9eXeYwu5vLcQtp1ajQkNShQ", // Замените на свой реальный токен доступа
-  "Content-Type": "application/json",
-  Accept: "application/json",
-};
-const msgApi = "https://notify.eskiz.uz/api/message/sms/send";
-const sendMsg = {
-            mobile_phone: phone,
-            message: `edablizko.com  ваш код:${code}` ,
-            from: "4546",
-          };
-          axios
-            .post(msgApi, sendMsg, { headers })
-            .then((response) => {
-              console.log(response);
-              return res.json({ message: "Ваш код отправлен на ваш номер" });
-            })
-            .catch((error) => {
-              console.log(error);
-              return res.json({ message: "Ошибка при отправке sms сообщения" });
-            });
-}
-
-    
-  } catch (error) {
+ 
+  const transporter = nodemailer.createTransport({
+      pool: true,
+     service: "gmail",
+     auth: {
+        user: "uzdub.group@gmail.com",
+        pass: 'fbcgnvqfbmocflcm',
+     },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
+    },
+    });
+    const mailOptions = {
+      from: 'uzdub.group@gmail.com',
+      to: phone,
+      subject: 'Parolanızı alın',
+      text: `edablizko.com  ваш код: ${code}`,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.status(400).json(error)
+      } else {
+      res.status(200).json(info)
+      }
+    })
+  }} catch (error) {
     console.error('Hata:', error);
     res.status(500).json({ error: error.message });
   }
