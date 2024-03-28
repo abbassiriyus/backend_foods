@@ -63,5 +63,15 @@ router.put('/update-data/:id', async (req, res) => {
       res.status(500).json({ message: 'An error occurred' });
     }
 });
+router.get('/verify', async (req, res) => {
+  try {
+    const query = 'SELECT * FROM document';
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message});
+  }
+});
 
 module.exports=router
