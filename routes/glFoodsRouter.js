@@ -59,10 +59,11 @@ router.get('/gl_foods/', async (req, res) => {
         var send_data=[]
         for (let i = 0; i < result.rows.length; i++) {
           for (let j = 0; j < result1.rows.length; j++) {
-             if(result.rows[i].id==result1.rows[j].food_ca_id){
-            send_data.push(result.rows[i])
-             }
-          }
+            if(result.rows[i].id==result1.rows[j].food_ca_id){
+             result.rows[i].food_ca_id=result1.rows[j].id
+           send_data.push(result.rows[i])
+            }
+         }
           for (let j = 0; j < result2.rows.length; j++) {
             if(result.rows[i].user_povar_id==result2.rows[j].id){
               result.rows[i].user_image=result2.rows[j].image

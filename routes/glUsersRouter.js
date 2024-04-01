@@ -25,7 +25,7 @@ router.get('/gl_users/', async (req, res) => {
  try{
   const query2 = 'SELECT * FROM gl_users';
   const result2 = await pool.query(query2);
-   console.log(result2.rows);
+
   const query3 = 'SELECT * FROM  users';
   const result3 = await pool.query(query3);
    console.log(result3.rows);
@@ -64,11 +64,12 @@ if(result6.rows[j].user_id==result3.rows[i].id){
 var senddate=[]
 for (let i = 0; i < result3.rows.length; i++) {
   result3.rows[i].push=false
-  for (let j = 0; j < result2.rows.length; j++) {
-  if(result3.rows[i].id==result2.rows[j].user_ca_id){
-    result3.rows[i].push=true 
-  }
-}
+  for (let j = 0; j < result1.rows.length; j++) {
+    if(result.rows[i].id==result1.rows[j].food_ca_id){
+     result.rows[i].food_ca_id=result1.rows[j].id
+   send_data.push(result.rows[i])
+    }
+ }
 if(result3.rows[i].push){
   senddate.push(result3.rows[i])
 }
