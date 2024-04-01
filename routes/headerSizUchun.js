@@ -43,7 +43,8 @@ router.get('/siz_uchun/', async (req, res) => {
       for (let i = 0; i < result.rows.length; i++) {
         for (let j = 0; j < result1.rows.length; j++) {
            if(result.rows[i].id==result1.rows[j].food_ca_id){
-send_data.push(result.rows[i])
+            result.rows[i].food_ca_id=result1.rows[j].id
+            send_data.push(result.rows[i])
            }
         }
         
