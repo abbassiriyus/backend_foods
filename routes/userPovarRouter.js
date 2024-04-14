@@ -50,16 +50,11 @@ router.get('/getpovar', async (req, res) => {
     const result5 = await pool.query(query5);
     const query6 = 'SELECT * FROM user_category';
     const result6 = await pool.query(query6);
-
-
     for (let i = 0; i < result6.rows.length; i++) {
 for (let j = 0; j < result5.rows.length; j++) {
 if(result6.rows[i].category_id===result5.rows[j].id){
   result6.rows[i].title=result5.rows[j].title
 }}}
-
-
-
     for (let i = 0; i <result.rows.length; i++) {
       result.rows[i].category=[]
      for (let j = 0; j < result1.rows.length; j++) {
