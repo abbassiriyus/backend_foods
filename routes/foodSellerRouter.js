@@ -194,6 +194,34 @@ for (let i = 0; i < result.rows.length; i++) {
     }
   });
   
+  router.put('/food_seller/status/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+     status
+      } = req.body;
+      const query = `
+        UPDATE food_seller SET
+          status = $1,
+          time_update= current_timestamp
+        WHERE id = $2
+        RETURNING *
+      `;
+      const values = [
+     status,
+        id,
+      ];
+      const result = await pool.query(query, values);
+      if (result.rows.length === 0) {
+        res.status(404).json({ error: 'Record not found' });
+      } else {
+        res.status(200).json(result.rows[0]);
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: error.message  });
+    }
+  });
   // Delete a food_seller record by ID
   router.delete('/food_seller/:id', async (req, res) => {
     try {
